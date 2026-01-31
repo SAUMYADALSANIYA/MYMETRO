@@ -1,1 +1,1 @@
-yo gang , I added installed express, dotenv, bcrypt, mongoose, jsonwebtoken and cors, please use "npm i"
+yo gang , I installed express, dotenv, bcrypt, mongoose, jsonwebtoken and cors, please use "npm i"
