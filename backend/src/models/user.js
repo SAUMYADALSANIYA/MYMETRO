@@ -23,7 +23,12 @@ const userSchema = new mongoose.Schema(
             type: String,
             enum: ["Admin", "Customer"],
             default: "Customer"
-        }
+        },
+        journeys: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Ticket",
+            index: true
+        }]
     }
 );
 
