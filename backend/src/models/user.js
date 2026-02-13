@@ -12,7 +12,8 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             unique: true,
-            lowercase: true
+            lowercase: true,
+            trim: true
         },
         password:{
             type: String,
@@ -29,8 +30,8 @@ const userSchema = new mongoose.Schema(
             ref: "Ticket",
             index: true
         }]
-    }
-);
+    },
+    { timestamps: true });
 
 userSchema.statics.hashPassword = async function (pass){
   return await bcrypt.hash(pass, 10);
