@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../App.css";
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,7 +15,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "http://localhost:5001/api/auth/login",
         { email, password }
       );
 
@@ -34,32 +36,39 @@ const Login = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "100px" }}>
-      <h2>Login</h2>
-
+    <div className="auth-container">
+      <h2>User Login</h2>
+      <div className="dots">•••</div>
+  
       <form onSubmit={handleLogin}>
+        <label>Email</label>
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <br /><br />
-
+  
+        <label>Password</label>
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <br /><br />
-
+  
         <button type="submit">Login</button>
       </form>
+  
+      <p>
+        Don’t have an account? <a href="/register">Sign Up</a>
+      </p>
     </div>
   );
+  
+  
 };
 
 export default Login;
