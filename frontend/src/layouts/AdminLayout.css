@@ -1,0 +1,84 @@
+:root {
+  --sidebar-width: 260px;
+  --bg-dark: #111111;
+  --bg-hover: rgba(255, 255, 255, 0.1);
+  --text-muted: #a0a0a0;
+  --danger: #dc3545;
+  --danger-hover: #b02a37;
+  --secondary-btn: #333333;
+  --transition: all 0.2s ease-in-out;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100vh; /* Full viewport height */
+  background-color: var(--bg-dark);
+  color: white;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* Navigation section */
+.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Tighter gap for a "group" feel */
+}
+
+/* Push bottom buttons down */
+.bottom-buttons {
+  margin-top: auto; 
+  padding-top: 20px;
+  border-top: 1px solid #333; /* Visual separator */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar button {
+  all: unset; /* Resets default button behavior more cleanly */
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  color: var(--text-muted);
+  transition: var(--transition);
+}
+
+.sidebar button:hover {
+  background-color: var(--bg-hover);
+  color: white;
+}
+
+/* Active State (add this class via JS to the current page) */
+.sidebar button.active {
+  background-color: var(--bg-hover);
+  color: white;
+  box-shadow: inset 3px 0 0 white; /* Subtle indicator line */
+}
+
+.change-password-btn {
+  background-color: var(--secondary-btn) !important;
+  color: white !important;
+}
+
+.change-password-btn:hover {
+  background-color: #444 !important;
+}
+
+.logout-btn {
+  background-color: var(--danger) !important;
+  color: white !important;
+  text-align: center !important; 
+  margin-top: 8px;
+}
+
+.logout-btn:hover {
+  background-color: var(--danger-hover) !important;
+}
