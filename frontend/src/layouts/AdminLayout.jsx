@@ -30,20 +30,28 @@ const AdminLayout = () => {
 
         {/* Navigation Buttons */}
         <div className="nav-buttons">
-          <button onClick={() => navigate("/admin")}>Dashboard</button>
-          <button onClick={() => navigate("/admin/create-admin")}>Create Admin</button>
-          <button onClick={() => navigate("/admin/manage-schedule")}>Manage Schedule</button>
-          <button onClick={() => navigate("/admin/manage-fare")}>Manage Fare</button>
-          <button onClick={() => navigate("/admin/view-users")}>View Users</button>
+          <button onClick={() => navigate("/admin")}>
+            Dashboard
+          </button>
+
+          <button onClick={() => navigate("/admin/manage-fare")}>
+            Manage Fare
+          </button>
         </div>
 
         {/* Bottom Section */}
         <div className="bottom-buttons">
-          <button className="change-password-btn" onClick={handleChangePassword}>
+          <button 
+            className="change-password-btn" 
+            onClick={handleChangePassword}
+          >
             Change Password
           </button>
 
-          <button className="logout-btn" onClick={logout}>
+          <button 
+            className="logout-btn" 
+            onClick={logout}
+          >
             Logout
           </button>
         </div>

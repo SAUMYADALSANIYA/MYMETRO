@@ -1,0 +1,103 @@
+:root {
+  --primary-accent: #111111;
+  --bg-card: #ffffff;
+  --border-light: #f0f0f0;
+  --text-main: #2d2d2d;
+  --text-muted: #6c757d;
+  --success-bg: #e8f5e9;
+  --success-text: #2e7d32;
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --transition: all 0.2s ease;
+}
+
+.dashboard-container {
+  padding: 40px; /* More breathing room */
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-main);
+}
+
+.dashboard-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 32px;
+  color: var(--primary-accent);
+}
+
+.card {
+  background-color: var(--bg-card);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.03); /* Subtle edge definition */
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Interactive feel */
+}
+
+.card h2 {
+  margin-bottom: 24px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Fare List Styling */
+.fare-list div {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between; /* Keeps labels and prices aligned */
+  align-items: center;
+  color: #444;
+}
+
+.fare-list div:last-child {
+  border-bottom: none;
+}
+
+.fare-list div:hover {
+  background-color: #fafafa; /* Subtle highlight on hover */
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-left: -8px;
+  margin-right: -8px;
+  border-radius: 6px;
+}
+
+/* Status Indicators */
+.status-text {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: var(--success-bg);
+  color: var(--success-text);
+  border-radius: 20px; /* Pill style */
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Loading State */
+.loading-text {
+  color: var(--text-muted);
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Utility for dynamic data */
+.fare-price {
+  font-weight: 700;
+  color: var(--primary-accent);
+}
