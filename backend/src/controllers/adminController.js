@@ -1,8 +1,8 @@
-const bcrypt = require("bcrypt");
-const User = require("../models/user");
-const Fare = require("../models/fare");
+import bcrypt from "bcrypt";
+import User from "../models/user.js";
+import Fare from "../models/fare.js";
 
-exports.changePassword = async (req, res) => {
+export const changePassword = async (req, res) => {
   try{
     const adminId = req.user.id;
     const { oldPassword, newPassword } = req.body
@@ -27,9 +27,9 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-exports.getFare = async (req, res) => {
+export const getFare = async (req, res) => {
   try{
-    if(req.user.role !== "admin") {
+    if(req.user.role !== "Admin") {
       return res.status(403).json({ message: "Access denied" });
     }
     let fare = await Fare.findOne();
@@ -56,7 +56,7 @@ exports.getFare = async (req, res) => {
   }
 };
 
-exports.updateFare = async (req, res) => {
+export const updateFare = async (req, res) => {
   try{
     if(req.user.role !== "Admin"){
       return res.status(403).json({ message: "Access denied" });

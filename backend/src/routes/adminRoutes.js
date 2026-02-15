@@ -1,12 +1,12 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const { 
+import { 
   changePassword,
   updateFare,
   getFare
-} = require("../controllers/adminController");
+} from "../controllers/adminController.js";
 
-const authMiddleware = require("../middleware/authMiddleware");
+import authMiddleware  from "../middleware/authMiddleware.js";
 
 router.put("/change-password", authMiddleware, changePassword);
 
@@ -14,4 +14,4 @@ router.put("/update-fare", authMiddleware, updateFare);
 
 router.get("/get-fare", authMiddleware, getFare);
 
-module.exports = router;
+export default router;

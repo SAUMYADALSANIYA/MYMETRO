@@ -26,7 +26,8 @@ const Login = () => {
 
       if (user.role === "Admin") {
         navigate("/admin");
-      } else {
+      }
+      else {
         navigate("/customer");
       }
 
@@ -64,7 +65,7 @@ const Login = () => {
       </form>
   
       <p>
-        Don’t have an account? <a href="/register">Sign Up</a>
+        Don't have an account? <a href="/register">Sign Up</a>
       </p>
     </div>
   );

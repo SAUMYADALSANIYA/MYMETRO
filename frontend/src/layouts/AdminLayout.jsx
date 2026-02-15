@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./AdminLayout.css";
 
@@ -14,53 +14,54 @@ const AdminLayout = () => {
     localStorage.setItem("lastLogin", now);
   }, []);
 
-  const logout = () => {
+  const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
-  };
-
-  const handleChangePassword = () => {
-    navigate("/admin/change-password");
+    navigate("/");
   };
 
   return (
     <div className="admin-container">
+      
+      {/* Sidebar */}
       <div className="sidebar">
         <h2>MyMetro Admin</h2>
 
-        {/* Navigation Buttons */}
-        <div className="nav-buttons">
-          <button onClick={() => navigate("/admin")}>
+        <nav className="nav-links">
+          <NavLink 
+            to="/admin" 
+            end 
+            className={({ isActive }) => isActive ? "active-link" : ""}
+          >
             Dashboard
-          </button>
+          </NavLink>
 
-          <button onClick={() => navigate("/admin/manage-fare")}>
+          <NavLink 
+            to="/admin/update-fare"
+            className={({ isActive }) => isActive ? "active-link" : ""}
+          >
             Manage Fare
-          </button>
-        </div>
+          </NavLink>
 
-        {/* Bottom Section */}
-        <div className="bottom-buttons">
-          <button 
-            className="change-password-btn" 
-            onClick={handleChangePassword}
+          <NavLink 
+            to="/admin/change-password"
+            className={({ isActive }) => isActive ? "active-link" : ""}
           >
             Change Password
-          </button>
+          </NavLink>
+        </nav>
 
-          <button 
-            className="logout-btn" 
-            onClick={logout}
-          >
-            Logout
-          </button>
-        </div>
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
 
+      {/* Main Content Area */}
       <div className="main">
         <div className="topbar">
           <div>Welcome, Admin</div>
-          <div>Last Login: {lastLogin || "First Login"}</div>
+          <div>
+            Last Login: {lastLogin ? lastLogin : "First Login"}
+          </div>
         </div>
 
         <div className="content">

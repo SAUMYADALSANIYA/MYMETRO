@@ -1,9 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import bcrypt from "bcrypt";
 import connectDB from "./config_db.js";
+import User from "./models/user.js";
 import authRoutes from "./routes/authRoutes.js";
-import adminRoutes from "./routes/adminroute.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -19,6 +21,30 @@ app.use("/api/admin", adminRoutes);
 app.get("/", (req, res) => {
   res.send("MyMetro API Running");
 });
+
+const createDefaultAdmin = async () => {
+  try{
+    const adminExists = await User.findOne({ role: "Admin" });
+    if(!adminExists){
+      const hashedPassword = await bcrypt.hash("admin123", 10);
+      await User.create({
+        username: "Admin1",
+        email: "admin@mymetro.com",
+        password: hashedPassword,
+        role: "Admin"
+      });
+      console.log("✅ Default admin created");
+    }
+    else{
+      console.log("ℹ️ Admin already exists");
+    }
+  }
+  catch(error){
+    console.error("Admin creation error:", error);
+  }
+};
+createDefaultAdmin();
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
