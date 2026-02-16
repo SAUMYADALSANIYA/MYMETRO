@@ -29,7 +29,7 @@ const createDefaultAdmin = async () => {
       const hashedPassword = await bcrypt.hash("admin123", 10);
       await User.create({
         username: "Admin1",
-        email: "admin@mymetro.com",
+        email: "admin1@mymetro.com",
         password: hashedPassword,
         role: "Admin"
       });

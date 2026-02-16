@@ -95,3 +95,30 @@ export const updateFare = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+export const createAdmin = async (req, res) => {
+  try{
+    const adminCount = await User.countDocuments({ role: "Admin" });
+    const username = `Admin${adminCount + 1}`;
+    const email = `${username}@mymetro.com`;
+    const password = "admin123";
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newAdmin = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+      role: "Admin",
+    });
+    res.status(201).json({
+      message: "New admin created successfully",
+      admin: {
+        username: newAdmin.username,
+        email: newAdmin.email,
+      },
+    });
+  }
+  catch(error){
+    console.error("Create admin error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

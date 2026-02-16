@@ -43,6 +43,14 @@ const AdminLayout = () => {
           </NavLink>
 
           <NavLink 
+          to="/admin/create-admin"
+          className={({ isActive }) => isActive ? "active-link" : ""}
+          >
+            Create New Admin
+          </NavLink>
+
+
+          <NavLink 
             to="/admin/change-password"
             className={({ isActive }) => isActive ? "active-link" : ""}
           >
