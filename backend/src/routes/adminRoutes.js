@@ -4,7 +4,10 @@ import {
   changePassword,
   updateFare,
   getFare,
-  createAdmin
+  createAdmin,
+  getUsers,
+  getUserJourneys,
+  getDashboardStats
 } from "../controllers/adminController.js";
 
 import authMiddleware  from "../middleware/authMiddleware.js";
@@ -16,6 +19,12 @@ router.put("/update-fare", authMiddleware, updateFare);
 router.get("/get-fare", authMiddleware, getFare);
 
 router.post("/create-admin", authMiddleware, createAdmin);
+
+router.get("/get-users", authMiddleware, getUsers);
+
+router.get("/user/:id/journeys", authMiddleware, getUserJourneys);
+
+router.get("/dashboard-stats", authMiddleware, getDashboardStats);
 
 
 export default router;

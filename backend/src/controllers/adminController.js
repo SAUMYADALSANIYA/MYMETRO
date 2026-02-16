@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import User from "../models/user.js";
 import Fare from "../models/fare.js";
+import Ticket from "../models/tickets.js";
 
 export const changePassword = async (req, res) => {
   try{
@@ -119,6 +120,52 @@ export const createAdmin = async (req, res) => {
   }
   catch(error){
     console.error("Create admin error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const getUsers = async (req, res) => {
+  try{
+    const search = req.query.search || "";
+    const users = await User.find({
+       role: "Customer",
+      email: { $regex: search, $options: "i" }
+    }).select("-password");
+    res.status(200).json(users);
+  }
+  catch (error) {
+    res.status(500).json({ message: "Error fetching users" });
+  }
+};
+
+export const getUserJourneys = async (req, res) => {
+  try{
+    if(req.user.role !== "Admin"){
+      return res.status(403).json({ message: "Access denied" });
+    }
+    const journeys = await Ticket.find({
+      boughtBy: req.params.id
+    }).sort({ createdAt: -1 });
+    res.json(journeys);
+  }
+  catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const getDashboardStats = async (req, res) => {
+  try{
+    if(req.user.role !== "Admin"){
+      return res.status(403).json({ message: "Access denied" });
+    }
+    const totalCustomers = await User.countDocuments({ role: "Customer" });
+    const totalTickets = await Ticket.countDocuments();
+    res.json({
+      totalCustomers,
+      totalTickets
+    });
+  }
+  catch (error) {
     res.status(500).json({ message: "Server error" });
   }
 };

@@ -7,11 +7,12 @@
   --success-bg: #e8f5e9;
   --success-text: #2e7d32;
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.06);
   --transition: all 0.2s ease;
 }
 
 .dashboard-container {
-  padding: 40px; /* More breathing room */
+  padding: 50px 40px;
   max-width: 1200px;
   margin: 0 auto;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -19,46 +20,79 @@
 }
 
 .dashboard-title {
-  font-size: 32px;
+  font-size: 34px;
   font-weight: 800;
   letter-spacing: -0.5px;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
+  color: var(--primary-accent);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-card h3 {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-card p {
+  font-size: 32px;
+  font-weight: 800;
   color: var(--primary-accent);
 }
 
 .card {
   background-color: var(--bg-card);
-  padding: 30px;
-  border-radius: 12px;
+  padding: 32px;
+  border-radius: 16px;
   box-shadow: var(--shadow-sm);
-  margin-bottom: 24px;
-  border: 1px solid rgba(0, 0, 0, 0.03); /* Subtle edge definition */
+  margin-bottom: 28px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
   transition: var(--transition);
 }
 
 .card:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Interactive feel */
+  box-shadow: var(--shadow-md);
 }
 
 .card h2 {
-  margin-bottom: 24px;
+  margin-bottom: 26px;
   font-size: 20px;
   font-weight: 700;
   color: var(--primary-accent);
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
-/* Fare List Styling */
 .fare-list div {
   padding: 14px 0;
   border-bottom: 1px solid var(--border-light);
   font-size: 15px;
   display: flex;
-  justify-content: space-between; /* Keeps labels and prices aligned */
+  justify-content: space-between;
   align-items: center;
   color: #444;
+  transition: var(--transition);
 }
 
 .fare-list div:last-child {
@@ -66,7 +100,7 @@
 }
 
 .fare-list div:hover {
-  background-color: #fafafa; /* Subtle highlight on hover */
+  background-color: #fafafa;
   padding-left: 8px;
   padding-right: 8px;
   margin-left: -8px;
@@ -74,30 +108,29 @@
   border-radius: 6px;
 }
 
-/* Status Indicators */
-.status-text {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 12px;
-  background-color: var(--success-bg);
-  color: var(--success-text);
-  border-radius: 20px; /* Pill style */
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 15px;
-}
-
-/* Loading State */
-.loading-text {
-  color: var(--text-muted);
-  font-style: italic;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Utility for dynamic data */
 .fare-price {
   font-weight: 700;
   color: var(--primary-accent);
+}
+
+.status-text {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  background-color: var(--success-bg);
+  color: var(--success-text);
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.success {
+  background-color: var(--success-bg);
+  color: var(--success-text);
+}
+
+.loading-text {
+  color: var(--text-muted);
+  font-style: italic;
 }
