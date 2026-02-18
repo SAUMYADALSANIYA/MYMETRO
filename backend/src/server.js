@@ -35,10 +35,10 @@ const createDefaultAdmin = async () => {
         password: hashedPassword,
         role: "Admin"
       });
-      console.log("✅ Default admin created");
+      console.log("Default admin created");
     }
     else{
-      console.log("ℹ️ Admin already exists");
+      console.log("Admin already exists");
     }
   }
   catch(error){

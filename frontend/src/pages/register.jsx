@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../App.css";
+import "./register.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -68,9 +68,8 @@ const Register = () => {
         <p>
           Already have an account?{" "}
           <span
-            style={{ color: "#ff4b5c", cursor: "pointer" }}
-            onClick={() => navigate("/")}
-          >
+          className="auth-link"
+          onClick={() => navigate("/")}>
             Login
           </span>
         </p>

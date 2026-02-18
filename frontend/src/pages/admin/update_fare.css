@@ -1,76 +1,79 @@
-:root {
-  --primary-dark: #111111;
-  --primary-hover: #333333;
-  --bg-card: #ffffff;
-  --border-color: #ddd;
-  --focus-ring: rgba(0, 0, 0, 0.08);
-  --text-main: #2d2d2d;
-  --text-muted: #666666;
-  --disabled: #9aa0a6;
-  --transition: all 0.2s ease-in-out;
-}
-
 .manage-fare-container {
-  padding: 40px;
+  min-height: calc(100vh - 80px); 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 5%;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: var(--text-main);
 }
 
 .manage-fare-title {
-  font-size: 32px;
+  font-size: clamp(28px, 3vw, 36px);
   font-weight: 800;
   letter-spacing: -0.5px;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
+  text-align: center;
 }
 
 .fare-card {
   background-color: var(--bg-card);
-  padding: 35px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  max-width: 550px; /* Slightly wider for better balance */
-  border: 1px solid rgba(0, 0, 0, 0.03);
+  padding: 60px 8%;  
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  max-width: 720px;
+  min-width: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: var(--transition);
 }
 
 .fare-group {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #f5f5f5; /* Subtle separation */
+  padding: 22px 0;
+  border-bottom: 1px solid #f3f4f6;
 }
 
 .fare-group:last-of-type {
   border-bottom: none;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .fare-group label {
-  font-size: 15px;
+  font-size: clamp(14px, 1.2vw, 16px);
   font-weight: 600;
   color: var(--text-main);
 }
 
 .fare-group input {
-  width: 130px;
-  padding: 10px 12px;
-  border-radius: 8px;
+  width: 35%;
+  min-width: 100px;
+  max-width: 200px;
+  padding: 12px 14px;
+  border-radius: 10px;
   border: 1px solid var(--border-color);
   font-size: 15px;
   font-weight: 500;
-  text-align: right; /* Standard for currency/number inputs */
+  text-align: right;
+  background-color: #ffffff;
+  color: #111;
+  outline: none;
   transition: var(--transition);
-  background-color: #fcfcfc;
 }
+
+
+
 
 .fare-group input:focus {
   outline: none;
   border-color: var(--primary-dark);
-  background-color: #fff;
+  background-color: #ffffff;
   box-shadow: 0 0 0 4px var(--focus-ring);
 }
 
-/* Chrome, Safari, Edge, Opera: Remove arrows from number input */
 .fare-group input::-webkit-outer-spin-button,
 .fare-group input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -78,22 +81,21 @@
 }
 
 .update-btn {
-  width: 100%; 
-  margin-top: 10px;
-  padding: 14px;
+  width: 100%;
+  padding: 18px;
   background-color: var(--primary-dark);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   transition: var(--transition);
 }
 
 .update-btn:hover:not(:disabled) {
   background-color: var(--primary-hover);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .update-btn:active:not(:disabled) {
@@ -104,4 +106,21 @@
   background-color: var(--disabled);
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .fare-card {
+    padding: 30px 20px;
+  }
+
+  .fare-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .fare-group input {
+    width: 100%;
+    max-width: 100%;
+  }
 }

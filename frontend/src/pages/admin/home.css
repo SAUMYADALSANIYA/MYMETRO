@@ -1,16 +1,3 @@
-:root {
-  --primary-accent: #111111;
-  --bg-card: #ffffff;
-  --border-light: #f0f0f0;
-  --text-main: #2d2d2d;
-  --text-muted: #6c757d;
-  --success-bg: #e8f5e9;
-  --success-text: #2e7d32;
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.06);
-  --transition: all 0.2s ease;
-}
-
 .dashboard-container {
   padding: 50px 40px;
   max-width: 1200px;
@@ -25,6 +12,7 @@
   letter-spacing: -0.5px;
   margin-bottom: 40px;
   color: var(--primary-accent);
+  text-align: center;
 }
 
 .stats-grid {
@@ -111,18 +99,6 @@
 .fare-price {
   font-weight: 700;
   color: var(--primary-accent);
-}
-
-.status-text {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 14px;
-  background-color: var(--success-bg);
-  color: var(--success-text);
-  border-radius: 30px;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 14px;
 }
 
 .success {

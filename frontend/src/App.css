@@ -1,3 +1,14 @@
+:root {
+  --primary-dark: #111111;
+  --primary-hover: #333333;
+  --bg-card: #ffffff;
+  --border-color: #e5e7eb;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --focus-ring: rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 10px 30px rgba(0, 0, 0, 0.06);
+  --transition: all 0.2s ease-in-out;
+}
 
 * {
   margin: 0;
@@ -5,99 +16,38 @@
   box-sizing: border-box;
 }
 
-
 body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #f9fafb;
+  color: #1f2937;
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f4c5c, #1b3b44);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
 }
 
-
-.auth-container {
-  width: 90%;
-  max-width: 420px;
-  background: #f3f3f3;
-  padding: 40px;
-  border-radius: 25px;
-  text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-
-.auth-container h2 {
-  margin-bottom: 8px;
-  font-size: 28px;
-  color: #2f4448;
-}
-
-
-.dots {
-  margin-bottom: 25px;
-  font-size: 20px;
-  letter-spacing: 6px;
-  color: #2f4448;
-}
-
-
-.auth-container label {
-  display: block;
-  text-align: left;
-  margin-top: 15px;
-  margin-bottom: 6px;
-  font-size: 14px;
-  color: #333;
-}
-
-
-.auth-container input {
-  width: 100%;
-  padding: 14px;
-  border-radius: 14px;
-  border: 2px solid black;
-  background: white;
-  font-size: 15px;
-  outline: none;
-  color:#000;
-}
-
-
-.auth-container button {
-  width: 100%;
-  margin-top: 25px;
-  padding: 14px;
-  border-radius: 30px;
-  border: none;
-  background: linear-gradient(90deg, #ff416c, #ff4b2b);
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.auth-container button:hover {
-  transform: translateY(-2px);
-}
-
-
-.auth-container p {
-  margin-top: 20px;
-  font-size: 14px;
-  color:#000;
-}
-
-.auth-container span {
-  color: #ff416c;
-  font-weight: 600;
+button {
+  font-family: inherit;
   cursor: pointer;
 }
 
+input,
+textarea {
+  font-family: inherit;
+}
 
-@media (max-width: 480px) {
-  .auth-container {
-    padding: 25px;
-  }
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
 }

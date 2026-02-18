@@ -2,6 +2,7 @@
   padding: 40px 60px;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: var(--text-main);
+  text-align: center;
 }
 
 .view-users-title {
@@ -9,6 +10,7 @@
   font-weight: 800;
   letter-spacing: -0.5px;
   margin-bottom: 30px;
+  text-align: center;
 }
 
 .view-users-container {
@@ -18,6 +20,7 @@
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(0, 0, 0, 0.04);
   max-width: 750px;
+  margin: 0 auto;
 }
 
 .search-input {

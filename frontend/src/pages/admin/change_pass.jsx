@@ -8,6 +8,12 @@ const ChangePassword = () => {
     confirmPassword: ""
   });
 
+  const [show, setShow] = useState({
+    old: false,
+    new: false,
+    confirm: false
+  });
+
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
@@ -20,12 +26,12 @@ const ChangePassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.newPassword !== formData.confirmPassword) {
+    if(formData.newPassword !== formData.confirmPassword) {
       setMessage("New passwords do not match");
       return;
     }
 
-    try {
+    try{
       const response = await fetch("http://localhost:5000/api/admin/change-pass", {
         method: "PUT",
         headers: {
@@ -40,45 +46,73 @@ const ChangePassword = () => {
 
       const data = await response.json();
 
-      if (response.ok) {
+      if(response.ok){
         setMessage("Password updated successfully");
-      } else {
+      }
+      else {
         setMessage(data.message);
       }
 
-    } catch (error) {
+    }
+    catch (error) {
       setMessage("Something went wrong");
     }
   };
 
   return (
     <div className="change-password-container">
-      <h2>Change Password</h2>
+      <h2 className="change-password-title">Change Password</h2>
+
 
       <form onSubmit={handleSubmit}>
-        <input
-          type="password"
-          name="oldPassword"
-          placeholder="Current Password"
-          onChange={handleChange}
-          required
-        />
 
-        <input
-          type="password"
-          name="newPassword"
-          placeholder="New Password"
-          onChange={handleChange}
-          required
-        />
+        <div className="password-field">
+          <input
+            type={show.old ? "text" : "password"}
+            name="oldPassword"
+            placeholder="Current Password"
+            onChange={handleChange}
+            required
+          />
+          <span
+            className="toggle-password"
+            onClick={() => setShow({ ...show, old: !show.old })}
+          >
+            {show.old ? "Hide" : "Show"}
+          </span>
+        </div>
 
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm New Password"
-          onChange={handleChange}
-          required
-        />
+        <div className="password-field">
+          <input
+            type={show.new ? "text" : "password"}
+            name="newPassword"
+            placeholder="New Password"
+            onChange={handleChange}
+            required
+          />
+          <span
+            className="toggle-password"
+            onClick={() => setShow({ ...show, new: !show.new })}
+          >
+            {show.new ? "Hide" : "Show"}
+          </span>
+        </div>
+
+        <div className="password-field">
+          <input
+            type={show.confirm ? "text" : "password"}
+            name="confirmPassword"
+            placeholder="Confirm New Password"
+            onChange={handleChange}
+            required
+          />
+          <span
+            className="toggle-password"
+            onClick={() => setShow({ ...show, confirm: !show.confirm })}
+          >
+            {show.confirm ? "Hide" : "Show"}
+          </span>
+        </div>
 
         <button type="submit">Update Password</button>
       </form>
@@ -86,6 +120,7 @@ const ChangePassword = () => {
       {message && <p className="message">{message}</p>}
     </div>
   );
+  
 };
 
 export default ChangePassword;

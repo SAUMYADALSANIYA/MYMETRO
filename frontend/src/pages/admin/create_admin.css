@@ -1,40 +1,31 @@
-:root {
-  --primary-dark: #111111;
-  --primary-hover: #333333;
-  --bg-card: #ffffff;
-  --border-color: #ddd;
-  --focus-ring: rgba(0, 0, 0, 0.08);
-  --text-main: #2d2d2d;
-  --text-muted: #666666;
-  --disabled: #9aa0a6;
-  --transition: all 0.2s ease-in-out;
-}
-
 .create-admin-container {
-  padding: 40px;
+  padding: 50px;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: var(--text-main);
+  text-align: center;
 }
 
 .create-admin-title {
-  font-size: 32px;
+  font-size: 35px;
   font-weight: 800;
   letter-spacing: -0.5px;
   margin-bottom: 30px;
+  text-align: center;
 }
 
 .create-admin-card {
   background-color: var(--bg-card);
-  padding: 35px;
+  padding: 50px;
   border-radius: 12px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   max-width: 500px;
   border: 1px solid rgba(0, 0, 0, 0.03);
+  margin: auto;
 }
 
 .create-admin-btn {
   width: 100%;
-  padding: 14px;
+  padding: 16px;
   background-color: var(--primary-dark);
   color: white;
   border: none;

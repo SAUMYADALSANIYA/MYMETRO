@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../App.css";
+import "./login.css";
 
 
 const Login = () => {
@@ -36,12 +36,12 @@ const Login = () => {
       alert("Invalid email or password");
     }
   };
-
   return (
+  <div className="auth-wrapper">
     <div className="auth-container">
       <h2>User Login</h2>
       <div className="dots">•••</div>
-  
+
       <form onSubmit={handleLogin}>
         <label>Email</label>
         <input
@@ -51,7 +51,7 @@ const Login = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-  
+
         <label>Password</label>
         <input
           type="password"
@@ -60,17 +60,16 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-  
+
         <button type="submit">Login</button>
       </form>
-  
+
       <p>
         Don't have an account? <a href="/register">Sign Up</a>
       </p>
     </div>
+  </div>
   );
-  
-  
 };
 
 export default Login;

@@ -69,13 +69,6 @@ const AdminHome = () => {
           </div>
         )}
       </div>
-
-      {/* System Status */}
-      <div className="card">
-        <h2>System Status</h2>
-        <p className="status-text success">✔ Metro Fare System Active</p>
-        <p className="status-text success">✔ Admin Access Verified</p>
-      </div>
     </div>
   );
 };
