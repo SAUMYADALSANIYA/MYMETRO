@@ -9,6 +9,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import customerRoutes from "./routes/customerRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 import customerMetroRoutes from "./routes/customerMetroRoutes.js";
+dotenv.config();
 connectDB();
 
 const app = express();
