@@ -7,8 +7,8 @@ import User from "./models/user.js";
 import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import customerRoutes from "./routes/customerRoutes.js";
-
-dotenv.config();
+import searchRoutes from "./routes/searchRoutes.js";
+import customerMetroRoutes from "./routes/customerMetroRoutes.js";
 connectDB();
 
 const app = express();
@@ -19,7 +19,8 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/customer", customerRoutes);
-
+app.use("/api/customer", searchRoutes);
+app.use("/api/customer", customerMetroRoutes);
 app.get("/", (req, res) => {
   res.send("MyMetro API Running");
 });
