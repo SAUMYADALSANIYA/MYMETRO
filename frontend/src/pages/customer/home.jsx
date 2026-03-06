@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./home.css";
 
 import { getAllMetros, getAllStations, searchMetro } from "./api";
@@ -7,8 +6,6 @@ import SearchBar from "./components/SearchBar";
 import MetroCard from "./components/MetroCard";
 
 export default function CustomerHome() {
-  const navigate = useNavigate();
-
   const [metros, setMetros] = useState([]);
   const [stations, setStations] = useState([]);
 
@@ -16,15 +13,9 @@ export default function CustomerHome() {
   const [destination, setDestination] = useState("");
 
   const [results, setResults] = useState([]);
-  const [mode, setMode] = useState("all"); // all | search
+  const [mode, setMode] = useState("all");
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState("");
-
-  // protect route: if no token, go login
-  useEffect(() => {
-    const t = localStorage.getItem("token");
-    if (!t) navigate("/");
-  }, [navigate]);
 
   useEffect(() => {
     loadInitial();
@@ -36,7 +27,6 @@ export default function CustomerHome() {
       setMsg("");
 
       const [m, s] = await Promise.all([getAllMetros(), getAllStations()]);
-
       setMetros(m.metros || []);
       setStations(s.stations || []);
     } catch (e) {
@@ -56,14 +46,24 @@ export default function CustomerHome() {
     const s = source.trim();
     const d = destination.trim();
 
-    if (!s || !d) return setMsg("Please choose source and destination");
-    if (s === d) return setMsg("Source and destination cannot be same");
+    if (!s || !d) {
+      setMsg("Please choose source and destination");
+      return;
+    }
+
+    if (s === d) {
+      setMsg("Source and destination cannot be same");
+      return;
+    }
 
     try {
       setLoading(true);
       const data = await searchMetro(s, d);
       setResults(data.results || []);
-      if ((data.results || []).length === 0) setMsg("No metro found for this route");
+
+      if ((data.results || []).length === 0) {
+        setMsg("No metro found for this route");
+      }
     } catch (e) {
       console.error(e);
       setMsg(e.message || "Search failed");
@@ -76,46 +76,46 @@ export default function CustomerHome() {
     setMode("all");
     setResults([]);
     setMsg("");
-  }
-
-  function logout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/");
+    setSource("");
+    setDestination("");
   }
 
   function onBook(metro) {
-    // For now: just simulate Paytm redirect
-    // Later you will replace with your Paytm link / payment flow
-    alert(`Booking: ${metro.routeName} (${metro.source} → ${metro.destination})`);
+    alert(
+      `Ticket Found\n\nRoute: ${metro.routeName}\nFrom: ${metro.source}\nTo: ${metro.destination}\nFare: ₹${metro.fare}`
+    );
   }
 
-  const list = useMemo(() => (mode === "all" ? metros : results), [mode, metros, results]);
+  const list = useMemo(() => {
+    return mode === "all" ? metros : results;
+  }, [mode, metros, results]);
 
   return (
-    <div className="customerPage">
-      <div className="customerHeader">
-        <h1>Customer Homepage</h1>
-        <button className="logout" onClick={logout}>Logout</button>
+    <div className="customer-dashboard-page">
+      <div className="customer-dashboard-header">
+        <h1>Customer Dashboard</h1>
+        <p>Search metro routes, timings, frequency and fare</p>
       </div>
 
-      <SearchBar
-        stations={stations}
-        source={source}
-        destination={destination}
-        setSource={setSource}
-        setDestination={setDestination}
-        onSearch={onSearch}
-        onShowAll={onShowAll}
-      />
+      <div className="customer-search-section">
+        <SearchBar
+          stations={stations}
+          source={source}
+          destination={destination}
+          setSource={setSource}
+          setDestination={setDestination}
+          onSearch={onSearch}
+          onShowAll={onShowAll}
+        />
+      </div>
 
-      {loading && <div className="msg">Loading...</div>}
-      {msg && <div className="msg">{msg}</div>}
+      {loading && <div className="customer-message">Loading...</div>}
+      {msg && <div className="customer-message">{msg}</div>}
 
-      <div className="grid">
-        {list.map((m) => (
+      <div className="customer-cards-grid">
+        {list.map((m, index) => (
           <MetroCard
-            key={m.routeId}
+            key={m.routeId || index}
             metro={m}
             isResult={mode === "search"}
             onBook={onBook}

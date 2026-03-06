@@ -1,67 +1,84 @@
-.customerPage {
+.customer-dashboard-page {
   width: 100%;
-  min-height: 100vh;
-  background: #f6f7fb;
-  padding: 24px;
 }
 
-.customerHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
+.customer-dashboard-header {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.customerHeader h1 {
-  font-size: 28px;
-  color: #111;
+.customer-dashboard-header h1 {
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 8px;
 }
 
-.logout {
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
+.customer-dashboard-header p {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.customer-search-section {
   background: white;
-  cursor: pointer;
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  margin-bottom: 28px;
 }
 
 .searchBar {
-  margin-top: 14px;
   display: flex;
-  gap: 12px;
+  gap: 16px;
+  align-items: end;
   flex-wrap: wrap;
-  align-items: flex-end;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+  min-width: 220px;
 }
 
 .field label {
   font-weight: 600;
-  color: #111;
-  font-size: 14px;
+  color: #2c3e50;
 }
 
 .field select {
-  padding: 10px;
-  min-width: 220px;
+  padding: 12px 14px;
   border-radius: 10px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #d1d5db;
   background: white;
+  color: #111;
   outline: none;
+  min-width: 220px;
+}
+
+.customer-dashboard-page select {
+  color: #111 !important;
+  background: #fff !important;
+}
+
+.customer-dashboard-page option {
+  color: #111 !important;
+  background: #fff !important;
+}
+
+.customer-dashboard-page optgroup {
+  color: #111 !important;
+  background: #fff !important;
 }
 
 .btn {
-  padding: 10px 16px;
+  padding: 12px 20px;
   border-radius: 10px;
   border: 1px solid #111;
   background: #111;
   color: white;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .btnOutline {
@@ -69,71 +86,58 @@
   color: #111;
 }
 
-.msg {
-  margin-top: 12px;
-  color: #111;
+.customer-message {
+  margin-bottom: 18px;
+  color: #374151;
+  font-weight: 500;
 }
 
-.grid {
-  margin-top: 18px;
+.customer-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 20px;
 }
 
 .card {
   background: white;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
-  padding: 14px;
+  padding: 22px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.04);
 }
 
 .cardTitle {
-  font-size: 18px;
-  font-weight: 800;
-  color: #111;
-  margin-bottom: 8px;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 14px;
 }
 
 .cardRow {
   display: flex;
-  gap: 8px;
-  margin-top: 8px;
+  gap: 10px;
+  margin-bottom: 12px;
+  align-items: flex-start;
 }
 
 .label {
+  min-width: 95px;
   font-weight: 700;
-  color: #111;
-  min-width: 85px;
+  color: #111827;
 }
 
 .value {
   color: #374151;
+  line-height: 1.6;
 }
 
 .divider {
   height: 1px;
-  background: #eee;
-  margin: 12px 0;
+  background: #e5e7eb;
+  margin: 16px 0;
 }
 
 .bookBtn {
   width: 100%;
   margin-top: 12px;
-}
-/* ===== Fix dropdown options visibility (important) ===== */
-.customerPage select {
-  color: #111 !important;
-  background: #fff !important;
-}
-
-.customerPage option {
-  color: #111 !important;
-  background: #fff !important;
-}
-
-/* Some browsers use optgroup too */
-.customerPage optgroup {
-  color: #111 !important;
-  background: #fff !important;
 }

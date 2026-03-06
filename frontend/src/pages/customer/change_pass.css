@@ -1,0 +1,68 @@
+.customer-change-password-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 20px;
+}
+
+.customer-change-password-card {
+  width: 100%;
+  max-width: 500px;
+  background: white;
+  border-radius: 14px;
+  padding: 30px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.customer-change-password-card h1 {
+  margin-bottom: 24px;
+  color: #1f2937;
+  text-align: center;
+}
+
+.customer-pass-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.customer-pass-field label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+.customer-pass-field input {
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1rem;
+}
+
+.customer-pass-field input:focus {
+  border-color: #3498db;
+}
+
+.customer-pass-btn {
+  width: 100%;
+  padding: 13px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.customer-pass-btn:hover {
+  background: #2980b9;
+}
+
+.customer-pass-message {
+  margin-bottom: 16px;
+  text-align: center;
+  font-weight: 600;
+  color: #374151;
+}
