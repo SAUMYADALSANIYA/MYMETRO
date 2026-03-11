@@ -21,7 +21,7 @@ export const processPayment = async (req, res) => {
       status = "FAILED";
     }
 
-    // store payment record
+    
     const payment = await Payment.create({
       source,
       destination,
