@@ -1,0 +1,45 @@
+.ticketPage {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.ticketCard {
+  width: 420px;
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.ticketCard h1 {
+  margin-bottom: 20px;
+}
+
+.ticketRow {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.qrBox {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.qrBox img {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+}
+
+.demoBtn {
+  width: 100%;
+  padding: 12px;
+  background: #111;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

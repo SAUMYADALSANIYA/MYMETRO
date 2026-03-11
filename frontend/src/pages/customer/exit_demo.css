@@ -1,0 +1,57 @@
+.exitPage {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.exitCard {
+  width: 420px;
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+.exitCard h1 {
+  margin-bottom: 20px;
+}
+
+.exitCard select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+
+.validateBtn,
+.payExtraBtn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.validateBtn {
+  background: #111;
+  color: white;
+}
+
+.payExtraBtn {
+  background: #0ea5e9;
+  color: white;
+}
+
+.exitMsg {
+  margin-top: 16px;
+  font-weight: bold;
+}
+
+.extraBox {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #f8fafc;
+}

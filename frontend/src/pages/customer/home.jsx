@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./home.css";
 
 import { getAllMetros, getAllStations, searchMetro } from "./api";
@@ -6,6 +7,7 @@ import SearchBar from "./components/SearchBar";
 import MetroCard from "./components/MetroCard";
 
 export default function CustomerHome() {
+  const navigate = useNavigate();
   const [metros, setMetros] = useState([]);
   const [stations, setStations] = useState([]);
 
@@ -80,11 +82,9 @@ export default function CustomerHome() {
     setDestination("");
   }
 
-  function onBook(metro) {
-    alert(
-      `Ticket Found\n\nRoute: ${metro.routeName}\nFrom: ${metro.source}\nTo: ${metro.destination}\nFare: ₹${metro.fare}`
-    );
-  }
+function onBook(metro) {
+  navigate("/customer/payment", { state: metro });
+}
 
   const list = useMemo(() => {
     return mode === "all" ? metros : results;
