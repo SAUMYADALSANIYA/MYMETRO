@@ -21,6 +21,14 @@ async function getFareDoc() {
   return fare;
 }
 
+function isValidCardNumber(cardNumber) {
+  return /^\d{16}$/.test(cardNumber);
+}
+
+function simulatePayment() {
+  return Math.random() < 0.95; // 95% success
+}
+
 export const processPayment = async (req, res) => {
   try {
     const {
@@ -29,12 +37,19 @@ export const processPayment = async (req, res) => {
       source,
       destination,
       cardNumber,
-      cardHolder
+      cardHolder,
+      cvv
     } = req.body;
 
-    if (!routeId || !routeName || !source || !destination || !cardNumber || !cardHolder) {
+    if (!routeId || !routeName || !source || !destination || !cardNumber || !cardHolder || !cvv) {
       return res.status(400).json({
         message: "All payment fields are required"
+      });
+    }
+
+    if (!isValidCardNumber(cardNumber)) {
+      return res.status(400).json({
+        message: "Card number must be 16 digits"
       });
     }
 
@@ -46,13 +61,17 @@ export const processPayment = async (req, res) => {
     const sIdx = route.stations.indexOf(source);
     const dIdx = route.stations.indexOf(destination);
 
-    if (sIdx === -1 || dIdx === -1 || dIdx <= sIdx) {
-      return res.status(400).json({ message: "Invalid source/destination for this route" });
+    if (sIdx === -1 || dIdx === -1 || dIdx === sIdx) {
+      return res.status(400).json({
+        message: "Invalid source/destination for this route"
+      });
     }
 
-    const stops = dIdx - sIdx;
+    const stops = Math.abs(dIdx - sIdx);
     const fareDoc = await getFareDoc();
     const amount = computeFareByStops(stops, fareDoc);
+
+    const paymentSuccess = simulatePayment();
 
     const payment = await Payment.create({
       source,
@@ -60,9 +79,17 @@ export const processPayment = async (req, res) => {
       amount,
       cardNumber,
       cardHolder,
-      status: "SUCCESS",
+      cvv,
+      status: paymentSuccess ? "SUCCESS" : "FAILED",
       userId: req.user.id
     });
+
+    if (!paymentSuccess) {
+      return res.status(400).json({
+        message: "Payment Failed",
+        payment
+      });
+    }
 
     const qrToken = crypto.randomUUID();
     const qrCodeDataUrl = await QRCode.toDataURL(qrToken);
@@ -84,6 +111,7 @@ export const processPayment = async (req, res) => {
       payment,
       ticket
     });
+
   } catch (error) {
     console.error("processPayment error:", error);
     return res.status(500).json({
@@ -101,12 +129,19 @@ export const processExtraFarePayment = async (req, res) => {
       source,
       destination,
       cardNumber,
-      cardHolder
+      cardHolder,
+      cvv
     } = req.body;
 
-    if (!parentTicketId || !routeId || !routeName || !source || !destination || !cardNumber || !cardHolder) {
+    if (!parentTicketId || !routeId || !routeName || !source || !destination || !cardNumber || !cardHolder || !cvv) {
       return res.status(400).json({
         message: "All extra fare fields are required"
+      });
+    }
+
+    if (!isValidCardNumber(cardNumber)) {
+      return res.status(400).json({
+        message: "Card number must be 16 digits"
       });
     }
 
@@ -123,13 +158,15 @@ export const processExtraFarePayment = async (req, res) => {
     const sIdx = route.stations.indexOf(source);
     const dIdx = route.stations.indexOf(destination);
 
-    if (sIdx === -1 || dIdx === -1 || dIdx <= sIdx) {
+    if (sIdx === -1 || dIdx === -1 || dIdx === sIdx) {
       return res.status(400).json({ message: "Invalid extra trip" });
     }
 
-    const stops = dIdx - sIdx;
+    const stops = Math.abs(dIdx - sIdx);
     const fareDoc = await getFareDoc();
     const amount = computeFareByStops(stops, fareDoc);
+
+    const paymentSuccess = simulatePayment();
 
     const payment = await Payment.create({
       source,
@@ -137,9 +174,17 @@ export const processExtraFarePayment = async (req, res) => {
       amount,
       cardNumber,
       cardHolder,
-      status: "SUCCESS",
+      cvv,
+      status: paymentSuccess ? "SUCCESS" : "FAILED",
       userId: req.user.id
     });
+
+    if (!paymentSuccess) {
+      return res.status(400).json({
+        message: "Payment Failed",
+        payment
+      });
+    }
 
     parentTicket.status = "USED";
     parentTicket.usedAt = new Date();
@@ -166,7 +211,9 @@ export const processExtraFarePayment = async (req, res) => {
       payment,
       ticket
     });
-  } catch (error) {
+
+  }
+  catch (error){
     console.error("processExtraFarePayment error:", error);
     return res.status(500).json({
       message: "Server error"

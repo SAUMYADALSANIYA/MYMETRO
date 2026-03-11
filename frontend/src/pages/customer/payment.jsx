@@ -24,7 +24,7 @@ export default function PaymentPage() {
   }
 
   async function handlePayment() {
-    if (cardNumber.length !== 16) {
+    if(cardNumber.length !== 16) {
       alert("Card number must be 16 digits");
       return;
     }
@@ -42,10 +42,9 @@ export default function PaymentPage() {
     setResult(null);
     setLoading(true);
 
-    try {
+    try{
       let data;
-
-      if (metro.parentTicketId) {
+      if(metro.parentTicketId){
         data = await payExtraFare({
           parentTicketId: metro.parentTicketId,
           routeId: metro.routeId,
@@ -53,16 +52,19 @@ export default function PaymentPage() {
           source: metro.source,
           destination: metro.destination,
           cardNumber,
-          cardHolder: name
+          cardHolder: name,
+          cvv
         });
-      } else {
+      }
+      else {
         data = await payTicket({
           routeId: metro.routeId,
           routeName: metro.routeName,
           source: metro.source,
           destination: metro.destination,
           cardNumber,
-          cardHolder: name
+          cardHolder: name,
+          cvv
         });
       }
 
@@ -122,10 +124,10 @@ export default function PaymentPage() {
 
       {loading && <div className="loader">Processing Payment...</div>}
       {result === "success" && (
-        <div className="successMsg">Payment Successful ✅ Ticket Generated</div>
+        <div className="successMsg">Payment Successful. Ticket Generated</div>
       )}
       {result === "fail" && (
-        <div className="failMsg">Payment Failed ❌ Please Try Again</div>
+        <div className="failMsg">Payment Failed! Please Try Again</div>
       )}
 
       <button className="backBtn" onClick={() => navigate(-1)}>Back</button>

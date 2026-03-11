@@ -12,7 +12,7 @@ function computeFareByStops(stops, fareDoc) {
 
 async function getFareDoc() {
   let fare = await Fare.findOne();
-  if (!fare) {
+  if(!fare) {
     fare = await Fare.create({ p: 10, q: 20, r: 30, s: 40, t: 50 });
   }
   return fare;
