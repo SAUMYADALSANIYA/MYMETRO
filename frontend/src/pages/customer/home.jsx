@@ -85,9 +85,11 @@ export default function CustomerHome() {
   }
 
   function onBook(metro) {
-    // For now: just simulate Paytm redirect
-    // Later you will replace with your Paytm link / payment flow
-    alert(`Booking: ${metro.routeName} (${metro.source} → ${metro.destination})`);
+
+    navigate("/payment", {
+      state: metro
+    });
+  
   }
 
   const list = useMemo(() => (mode === "all" ? metros : results), [mode, metros, results]);

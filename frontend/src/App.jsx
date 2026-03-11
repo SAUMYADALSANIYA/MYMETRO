@@ -12,6 +12,7 @@ import ChangePassword from "./pages/admin/change_pass";
 import ViewUsers from "./pages/admin/view_users";
 
 import CustomerHome from "./pages/customer/home";
+import PaymentPage from "./pages/customer/payment";
 
 import './App.css';
 
@@ -34,6 +35,7 @@ function App() {
 
         {/* Customer Route */}
         <Route path="/customer" element={<CustomerHome />} />
+        <Route path="/payment" element={<PaymentPage />} />
       </Routes>
     </BrowserRouter>
   );

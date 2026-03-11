@@ -1,0 +1,51 @@
+.paymentPage{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-top:50px;
+  }
+  
+  .paymentCard{
+    width:350px;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .row{
+    display:flex;
+    justify-content:space-between;
+    margin:10px 0;
+  }
+  
+  .fare{
+    font-size:20px;
+    font-weight:bold;
+  }
+  
+  .payBtn{
+    width:100%;
+    padding:10px;
+    margin-top:20px;
+    background:#3399cc;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+  }
+  
+  .backBtn{
+    margin-top:20px;
+  }
+  .loader {
+    margin-top: 20px;
+    font-size: 18px;
+    color: blue;
+    animation: blink 1s infinite;
+  }
+  
+  @keyframes blink {
+    0% {opacity:1;}
+    50% {opacity:0.3;}
+    100% {opacity:1;}
+  }
