@@ -1,5 +1,5 @@
 import express from "express";
-import Ticket from "../models/tickets.js";
+import Ticket from "../models/ticket.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();

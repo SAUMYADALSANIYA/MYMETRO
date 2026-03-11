@@ -13,6 +13,9 @@ import ViewUsers from "./pages/admin/view_users";
 import CustomerLayout from "./layouts/CustomerLayout";
 import CustomerHome from "./pages/customer/home";
 import CustomerChangePassword from "./pages/customer/change_pass";
+import PaymentPage from "./pages/customer/payment";
+import TicketPage from "./pages/customer/ticket";
+import ExitDemoPage from "./pages/customer/exit_demo";
 
 import "./App.css";
 
@@ -37,6 +40,9 @@ function App() {
         <Route path="/customer" element={<CustomerLayout />}>
           <Route index element={<CustomerHome />} />
           <Route path="change-password" element={<CustomerChangePassword />} />
+          <Route path="payment" element={<PaymentPage />} />
+          <Route path="ticket" element={<TicketPage />} />
+          <Route path="exit-demo" element={<ExitDemoPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
