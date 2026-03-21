@@ -1,8 +1,14 @@
-export default function CustomerMetroCard({ metro, source, destination }) {
-  const stationNames = metro.stations.map((station) => station.name).join(" → ");
-  const includesSource = source && metro.stations.some((station) => station.name === source);
+export default function CustomerMetroCard({ metro, source, destination, onBook }) { // Added onBook here
+  // Add a fallback in case stations are undefined
+  const stationList = metro.stations || [];
+  const stationNames = stationList.map((station) => station.name || station).join(" → ");
+  
+  const includesSource = source && stationList.some((station) => (station.name || station) === source);
   const includesDestination =
-    destination && metro.stations.some((station) => station.name === destination);
+    destination && stationList.some((station) => (station.name || station) === destination);
+
+  // We consider it a "Search Result" if both a source and destination are provided
+  const isResult = source && destination;
 
   return (
     <div className="card">
@@ -15,27 +21,29 @@ export default function CustomerMetroCard({ metro, source, destination }) {
 
       <div className="cardRow">
         <span className="label">Timing:</span>
-        <span className="value">{metro.timing}</span>
+        <span className="value">{metro.timing || "Not available"}</span>
       </div>
 
       <div className="cardRow">
         <span className="label">Frequency:</span>
-        <span className="value">{metro.frequency}</span>
+        <span className="value">{metro.frequency || "Not available"}</span>
       </div>
 
       <div className="cardRow">
         <span className="label">Fare:</span>
-        <span className="value">{metro.fareRange}</span>
+        {/* Fallback to metro.fare if fareRange isn't available */}
+        <span className="value">{metro.fareRange || (metro.fare ? `₹${metro.fare}` : "N/A")}</span>
       </div>
 
       <div className="cardRow">
         <span className="label">Duration:</span>
-        <span className="value">{metro.estimatedDuration}</span>
+        <span className="value">{metro.estimatedDuration || "N/A"}</span>
       </div>
 
       <div className="cardRow">
         <span className="label">Stops:</span>
-        <span className="value">{metro.stations.length} stations</span>
+        {/* Fallback to metro.stops if station array length isn't accurate */}
+        <span className="value">{stationList.length > 0 ? `${stationList.length} stations` : (metro.stops || "N/A")}</span>
       </div>
 
       {(includesSource || includesDestination) && (
@@ -49,6 +57,16 @@ export default function CustomerMetroCard({ metro, source, destination }) {
               {includesDestination ? "includes destination" : ""}
             </span>
           </div>
+        </>
+      )}
+
+      {/* Added the Book Ticket button logic from main */}
+      {isResult && (
+        <>
+          <div className="divider" />
+          <button className="btn bookBtn" onClick={() => onBook?.(metro)} style={{ marginTop: '10px', width: '100%' }}>
+            Book Ticket
+          </button>
         </>
       )}
     </div>
