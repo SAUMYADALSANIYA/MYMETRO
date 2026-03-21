@@ -9,6 +9,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import customerRoutes from "./routes/customerRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 import customerMetroRoutes from "./routes/customerMetroRoutes.js";
+import publicRoutes from "./routes/publicRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -20,6 +21,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/public", publicRoutes);
 app.use("/api/customer", customerRoutes);
 app.use("/api/customer", searchRoutes);
 app.use("/api/customer", customerMetroRoutes);
