@@ -11,14 +11,14 @@ const AdminHome = () => {
         const token = localStorage.getItem("token");
 
         const fareRes = await fetch(
-          "http://localhost:5000/api/admin/get-fare",
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/get-fare`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
 
         const statsRes = await fetch(
-          "http://localhost:5000/api/admin/dashboard-stats",
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/dashboard-stats`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

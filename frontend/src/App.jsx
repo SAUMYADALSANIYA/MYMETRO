@@ -13,6 +13,7 @@ import ViewUsers from "./pages/admin/view_users";
 
 import CustomerHome from "./pages/customer/home";
 import PaymentPage from "./pages/customer/payment";
+import OAuthSuccess from "./pages/oauth-success";
 
 import './App.css';
 
@@ -36,6 +37,7 @@ function App() {
         {/* Customer Route */}
         <Route path="/customer" element={<CustomerHome />} />
         <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/oauth-success" element={<OAuthSuccess />} />
       </Routes>
     </BrowserRouter>
   );

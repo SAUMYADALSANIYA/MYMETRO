@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/login`, {
         email,
         password,
       });
@@ -43,12 +43,19 @@ const Login = () => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.open(`${import.meta.env.VITE_API_BASE_URL}/auth/google`, "_self");
+  };
+
+
+  
+
   return (
     <div className="auth-wrapper">
       <div className="auth-container">
         <h2>User Login</h2>
         <div className="dots">•••</div>
-
+  
         <form onSubmit={handleLogin}>
           <label>Email</label>
           <input
@@ -58,7 +65,7 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-
+  
           <label>Password</label>
           <input
             type="password"
@@ -67,16 +74,35 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-
+  
           <button type="submit">Login</button>
         </form>
-
+  
+        
+        <button 
+          onClick={handleGoogleLogin}
+          style={{
+            marginTop: "10px",
+            width: "100%",
+            padding: "10px",
+            backgroundColor: "#4285F4",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer"
+          }}
+        >
+          Sign in with Google
+        </button>
+  
         <p>
           Don't have an account? <Link to="/register">Sign Up</Link>
         </p>
       </div>
     </div>
   );
+
+  
 };
 
 export default Login;
