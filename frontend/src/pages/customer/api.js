@@ -6,35 +6,70 @@ function token() {
 
 function authHeaders() {
   return {
-    Authorization: `Bearer ${token()}`,
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token()}`
   };
 }
 
 export async function getAllMetros() {
   const res = await fetch(`${API}/api/customer/metros`, {
-    headers: authHeaders(),
+    headers: authHeaders()
   });
   const json = await res.json();
   if (!res.ok) throw new Error(json.message || "Failed to load metros");
-  return json; // {count, metros}
+  return json;
 }
 
 export async function getAllStations() {
   const res = await fetch(`${API}/api/customer/stations`, {
-    headers: authHeaders(),
+    headers: authHeaders()
   });
   const json = await res.json();
   if (!res.ok) throw new Error(json.message || "Failed to load stations");
-  return json; // {count, stations}
+  return json;
 }
 
 export async function searchMetro(source, destination) {
-  const url = `${API}/api/customer/search?source=${encodeURIComponent(
-    source
-  )}&destination=${encodeURIComponent(destination)}`;
-
-  const res = await fetch(url, { headers: authHeaders() });
+  const res = await fetch(
+    `${API}/api/customer/search?source=${encodeURIComponent(source)}&destination=${encodeURIComponent(destination)}`,
+    {
+      headers: authHeaders()
+    }
+  );
   const json = await res.json();
   if (!res.ok) throw new Error(json.message || "Search failed");
-  return json; // {count, results}
+  return json;
+}
+
+export async function payTicket(paymentData) {
+  const res = await fetch(`${API}/api/payment/pay`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(paymentData)
+  });
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.message || "Payment failed");
+  return json;
+}
+
+export async function payExtraFare(paymentData) {
+  const res = await fetch(`${API}/api/payment/pay-extra`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify(paymentData)
+  });
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.message || "Extra fare payment failed");
+  return json;
+}
+
+export async function validateExit(qrToken, exitStation) {
+  const res = await fetch(`${API}/api/gate/validate-exit`, {
+    method: "POST",
+    headers: authHeaders(),
+    body: JSON.stringify({ qrToken, exitStation })
+  });
+  const json = await res.json();
+  if (!res.ok) throw json;
+  return json;
 }

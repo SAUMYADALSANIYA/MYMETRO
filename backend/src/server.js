@@ -9,8 +9,10 @@ import adminRoutes from "./routes/adminRoutes.js";
 import customerRoutes from "./routes/customerRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 import customerMetroRoutes from "./routes/customerMetroRoutes.js";
-import publicRoutes from "./routes/publicRoutes.js";
 
+import publicRoutes from "./routes/publicRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
+import gateRoutes from "./routes/gateRoutes.js";
 dotenv.config();
 connectDB();
 
@@ -20,11 +22,14 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+
 app.use("/api/admin", adminRoutes);
 app.use("/api/public", publicRoutes);
 app.use("/api/customer", customerRoutes);
 app.use("/api/customer", searchRoutes);
 app.use("/api/customer", customerMetroRoutes);
+app.use("/api/payment", paymentRoutes);
+app.use("/api/gate", gateRoutes);
 
 app.get("/", (req, res) => {
   res.send("MyMetro API Running");

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./home.css";
 
 import { getAllMetros } from "./api";
@@ -8,6 +9,7 @@ import CustomerMetroMap from "./components/CustomerMetroMap";
 
 function mapMetroResponse(metros) {
   return metros.map((m) => ({
+    ...m, // Keep original data for the payment page
     routeName:         m.routeName,
     color:             m.color || "#1E88E5",
     fareRange:         m.fareRange || "",
@@ -23,6 +25,8 @@ function mapMetroResponse(metros) {
 }
 
 export default function CustomerHome() {
+  // Combined from main and saumya
+  const navigate = useNavigate();
   const [metroData, setMetroData]   = useState([]);
   const [loading, setLoading]       = useState(true);
   const [fetchError, setFetchError] = useState("");
@@ -104,6 +108,12 @@ export default function CustomerHome() {
     setDestination("");
   }
 
+  // Combined from main branch
+  function onBook(metro) {
+    navigate("/customer/payment", { state: metro });
+  }
+
+  // Combined from saumya branch
   const list = useMemo(() => {
     return mode === "all" ? metroData : results;
   }, [mode, metroData, results]);
@@ -159,6 +169,7 @@ export default function CustomerHome() {
             metro={metro}
             source={source}
             destination={destination}
+            onBook={onBook} 
           />
         ))}
       </div>

@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import User from "../models/user.js";
 import Fare from "../models/fare.js";
-import Ticket from "../models/tickets.js";
+import Ticket from "../models/ticket.js";
 
 export const changePassword = async (req, res) => {
   try{
