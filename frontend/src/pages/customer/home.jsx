@@ -2,76 +2,102 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./home.css";
 
-import { getAllMetros, getAllStations, searchMetro } from "./api";
-import SearchBar from "./components/SearchBar";
-import MetroCard from "./components/MetroCard";
+import { getAllMetros } from "./api";
+import CustomerSearchBar from "./components/CustomerSearchBar";
+import CustomerMetroCard from "./components/CustomerMetroCard";
+import CustomerMetroMap from "./components/CustomerMetroMap";
+
+function mapMetroResponse(metros) {
+  return metros.map((m) => ({
+    ...m, // Keep original data for the payment page
+    routeName:         m.routeName,
+    color:             m.color || "#1E88E5",
+    fareRange:         m.fareRange || "",
+    estimatedDuration: m.estimatedDuration || "",
+    timing:            m.schedule
+      ? `${m.schedule.startTime} - ${m.schedule.endTime}`
+      : "N/A",
+    frequency: m.schedule
+      ? `Every ${m.schedule.frequencyMins} mins`
+      : "N/A",
+    stations: m.stations
+  }));
+}
 
 export default function CustomerHome() {
+  // Combined from main and saumya
   const navigate = useNavigate();
-  const [metros, setMetros] = useState([]);
-  const [stations, setStations] = useState([]);
+  const [metroData, setMetroData]   = useState([]);
+  const [loading, setLoading]       = useState(true);
+  const [fetchError, setFetchError] = useState("");
 
-  const [source, setSource] = useState("");
+  const [source, setSource]           = useState("");
   const [destination, setDestination] = useState("");
-
-  const [results, setResults] = useState([]);
-  const [mode, setMode] = useState("all");
-  const [loading, setLoading] = useState(false);
-  const [msg, setMsg] = useState("");
+  const [results, setResults]         = useState([]);
+  const [mode, setMode]               = useState("all");
+  const [msg, setMsg]                 = useState("");
 
   useEffect(() => {
-    loadInitial();
+    getAllMetros()
+      .then((data) => {
+        setMetroData(mapMetroResponse(data.metros || []));
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setFetchError("Could not load metro data. Please try again later.");
+        setLoading(false);
+      });
   }, []);
 
-  async function loadInitial() {
-    try {
-      setLoading(true);
-      setMsg("");
+  const allStations = useMemo(() => {
+    return [...new Set(metroData.flatMap((route) => route.stations.map((s) => s.name)))].sort();
+  }, [metroData]);
 
-      const [m, s] = await Promise.all([getAllMetros(), getAllStations()]);
-      setMetros(m.metros || []);
-      setStations(s.stations || []);
-    } catch (e) {
-      console.error(e);
-      setMsg(e.message || "Failed to load data");
-    } finally {
-      setLoading(false);
-    }
+  function findMatchingRoutes(sourceStation, destinationStation) {
+    return metroData.filter((route) => {
+      const stationNames = route.stations.map((station) => station.name);
+      return (
+        stationNames.includes(sourceStation) &&
+        stationNames.includes(destinationStation)
+      );
+    });
   }
 
-  async function onSearch(e) {
+  function onSearch(e) {
     e.preventDefault();
     setMsg("");
-    setResults([]);
-    setMode("search");
 
     const s = source.trim();
     const d = destination.trim();
 
     if (!s || !d) {
       setMsg("Please choose source and destination");
+      setResults([]);
+      setMode("search");
       return;
     }
 
     if (s === d) {
       setMsg("Source and destination cannot be same");
+      setResults([]);
+      setMode("search");
       return;
     }
 
-    try {
-      setLoading(true);
-      const data = await searchMetro(s, d);
-      setResults(data.results || []);
+    const matchedRoutes = findMatchingRoutes(s, d);
 
-      if ((data.results || []).length === 0) {
-        setMsg("No metro found for this route");
-      }
-    } catch (e) {
-      console.error(e);
-      setMsg(e.message || "Search failed");
-    } finally {
-      setLoading(false);
+    if (matchedRoutes.length > 0) {
+      setResults(matchedRoutes);
+      setMode("search");
+      return;
     }
+
+    setResults([]);
+    setMode("search");
+    setMsg(
+      "Direct same-line route not found. Interchange route support can be added next."
+    );
   }
 
   function onShowAll() {
@@ -82,24 +108,42 @@ export default function CustomerHome() {
     setDestination("");
   }
 
-function onBook(metro) {
-  navigate("/customer/payment", { state: metro });
-}
+  // Combined from main branch
+  function onBook(metro) {
+    navigate("/customer/payment", { state: metro });
+  }
 
+  // Combined from saumya branch
   const list = useMemo(() => {
-    return mode === "all" ? metros : results;
-  }, [mode, metros, results]);
+    return mode === "all" ? metroData : results;
+  }, [mode, metroData, results]);
+
+  if (loading) {
+    return (
+      <div className="customer-dashboard-page">
+        <p style={{ padding: "2rem" }}>Loading metro data…</p>
+      </div>
+    );
+  }
+
+  if (fetchError) {
+    return (
+      <div className="customer-dashboard-page">
+        <p style={{ padding: "2rem", color: "red" }}>{fetchError}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="customer-dashboard-page">
       <div className="customer-dashboard-header">
-        <h1>Customer Dashboard</h1>
-        <p>Search metro routes, timings, frequency and fare</p>
+        <h1>Ahmedabad Metro Dashboard</h1>
+        <p>Search metro routes, timings, frequency and fare on the map</p>
       </div>
 
       <div className="customer-search-section">
-        <SearchBar
-          stations={stations}
+        <CustomerSearchBar
+          stations={allStations}
           source={source}
           destination={destination}
           setSource={setSource}
@@ -109,16 +153,23 @@ function onBook(metro) {
         />
       </div>
 
-      {loading && <div className="customer-message">Loading...</div>}
       {msg && <div className="customer-message">{msg}</div>}
 
+      <CustomerMetroMap
+        routes={metroData}
+        highlightedRoutes={list}
+        source={source}
+        destination={destination}
+      />
+
       <div className="customer-cards-grid">
-        {list.map((m, index) => (
-          <MetroCard
-            key={m.routeId || index}
-            metro={m}
-            isResult={mode === "search"}
-            onBook={onBook}
+        {list.map((metro) => (
+          <CustomerMetroCard
+            key={metro.routeName}
+            metro={metro}
+            source={source}
+            destination={destination}
+            onBook={onBook} 
           />
         ))}
       </div>
