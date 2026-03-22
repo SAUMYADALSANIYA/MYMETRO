@@ -4,7 +4,7 @@ import LandingMap from "./pages/LandingMap";
 import Login from "./pages/login";
 import Register from "./pages/register";
 
-import CreateAdmin from "./pages/admin/create_admin";
+import ManageAdmin from "./pages/admin/manage_admin";
 import AdminLayout from "./layouts/AdminLayout";
 import AdminHome from "./pages/admin/home";
 import UpdateFare from "./pages/admin/update_fare";
@@ -33,7 +33,7 @@ function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminHome />} />
           <Route path="update-fare" element={<UpdateFare />} />
-          <Route path="create-admin" element={<CreateAdmin />} />
+          <Route path="ManageAdmin" element={<ManageAdmin />} />
           <Route path="view-users" element={<ViewUsers />} />
           <Route path="change-password" element={<ChangePassword />} />
         </Route>

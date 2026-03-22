@@ -27,6 +27,7 @@ const Login = () => {
 
       // save new session
       localStorage.setItem("token", token);
+      localStorage.setItem("lastLogin",new Date(res.data.user.lastLogin).toLocaleString());
       localStorage.setItem("role", user.role);
       localStorage.setItem("user", JSON.stringify(user)); // ✅ store full user
 
