@@ -59,13 +59,14 @@ const ChangePassword = () => {
     }
   };
 
-  return (
-    <div className="change-password-container">
+return (
+  <>
+    <div>
       <h2 className="change-password-title">Change Password</h2>
+    </div>
 
-
+    <div className="change-password-container">
       <form onSubmit={handleSubmit}>
-
         <div className="password-field">
           <input
             type={show.old ? "text" : "password"}
@@ -119,7 +120,8 @@ const ChangePassword = () => {
 
       {message && <p className="message">{message}</p>}
     </div>
-  );
+  </>
+);
   
 };
 

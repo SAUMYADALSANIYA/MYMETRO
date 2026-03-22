@@ -3,6 +3,7 @@
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color: var(--text-main);
   text-align: center;
+  justify-content: center;
 }
 
 .create-admin-title {
