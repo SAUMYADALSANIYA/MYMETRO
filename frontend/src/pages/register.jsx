@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "./register.css";
 
@@ -14,15 +14,17 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      await axios.post(
-        "http://localhost:5000/api/auth/register",
-        { username, email, password }
-      );
+      const res = await axios.post("/api/auth/register", {
+        username,
+        email,
+        password
+      });
 
-      alert("Registration successful!");
+      alert(res.data.message || "Registration successful");
       navigate("/");
     } catch (err) {
-      alert(err.response?.data?.message || "Registration failed");
+      console.error(err);
+      alert(err?.response?.data?.message || "Registration failed");
     }
   };
 
@@ -30,14 +32,13 @@ const Register = () => {
     <div className="auth-wrapper">
       <div className="auth-container">
         <h2>Create Account</h2>
-        <div className="dots">• • •</div>
+        <div className="dots">•••</div>
 
         <form onSubmit={handleRegister}>
-
           <label>Username</label>
           <input
             type="text"
-            placeholder="Enter your username"
+            placeholder="Enter username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
@@ -46,7 +47,7 @@ const Register = () => {
           <label>Email</label>
           <input
             type="email"
-            placeholder="Enter your email"
+            placeholder="Enter email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -55,23 +56,17 @@ const Register = () => {
           <label>Password</label>
           <input
             type="password"
-            placeholder="Enter your password"
+            placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
 
-          <button type="submit">Sign Up</button>
-
+          <button type="submit">Register</button>
         </form>
 
         <p>
-          Already have an account?{" "}
-          <span
-          className="auth-link"
-          onClick={() => navigate("/")}>
-            Login
-          </span>
+          Already have an account? <Link to="/">Login</Link>
         </p>
       </div>
     </div>

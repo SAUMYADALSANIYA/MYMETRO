@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import QRCode from "qrcode";
+
 import Payment from "../models/payment.js";
 import Ticket from "../models/ticket.js";
 import Route from "../models/route.js";
@@ -65,7 +66,13 @@ export const processPayment = async (req, res) => {
     });
 
     const qrToken = crypto.randomUUID();
-    const qrCodeDataUrl = await QRCode.toDataURL(qrToken);
+
+    const FRONTEND_BASE_URL =
+      process.env.FRONTEND_BASE_URL || "http://localhost:5173";
+
+    const scanUrl = `${FRONTEND_BASE_URL}/customer/scan/${qrToken}`;
+
+    const qrCodeDataUrl = await QRCode.toDataURL(scanUrl);
 
     const ticket = await Ticket.create({
       source,
@@ -75,6 +82,7 @@ export const processPayment = async (req, res) => {
       farePaid: amount,
       boughtBy: req.user.id,
       qrToken,
+      scanUrl,
       qrCodeDataUrl,
       status: "ACTIVE"
     });
@@ -146,7 +154,13 @@ export const processExtraFarePayment = async (req, res) => {
     await parentTicket.save();
 
     const qrToken = crypto.randomUUID();
-    const qrCodeDataUrl = await QRCode.toDataURL(qrToken);
+
+    const FRONTEND_BASE_URL =
+      process.env.FRONTEND_BASE_URL || "http://localhost:5173";
+
+    const scanUrl = `${FRONTEND_BASE_URL}/customer/scan/${qrToken}`;
+
+    const qrCodeDataUrl = await QRCode.toDataURL(scanUrl);
 
     const ticket = await Ticket.create({
       source,
@@ -156,6 +170,7 @@ export const processExtraFarePayment = async (req, res) => {
       farePaid: amount,
       boughtBy: req.user.id,
       qrToken,
+      scanUrl,
       qrCodeDataUrl,
       status: "ACTIVE",
       parentTicketId: parentTicket._id

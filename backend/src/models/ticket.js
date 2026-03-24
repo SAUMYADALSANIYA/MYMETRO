@@ -46,6 +46,11 @@ const ticketSchema = new mongoose.Schema(
       unique: true
     },
 
+    scanUrl: {
+      type: String,
+      required: true
+    },
+
     qrCodeDataUrl: {
       type: String,
       required: true

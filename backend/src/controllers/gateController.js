@@ -61,7 +61,6 @@ export const validateExit = async (req, res) => {
       });
     }
 
-    // user went beyond booked destination
     if (exitIdx > bookedDestIdx) {
       const fareDoc = await getFareDoc();
       const extraStops = exitIdx - bookedDestIdx;
@@ -83,7 +82,6 @@ export const validateExit = async (req, res) => {
       });
     }
 
-    // valid exit: exact or earlier
     ticket.status = "USED";
     ticket.usedAt = new Date();
     await ticket.save();

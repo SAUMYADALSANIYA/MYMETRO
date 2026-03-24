@@ -72,7 +72,7 @@ export default function PaymentPage() {
         navigate("/customer/ticket", {
           state: { ticket: data.ticket }
         });
-      }, 1200);
+      }, 1000);
     } catch (e) {
       console.error(e);
       setResult("fail");
