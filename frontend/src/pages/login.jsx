@@ -13,23 +13,16 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post("/api/auth/login", {
         email,
-        password,
+        password
       });
 
       const { token, user } = res.data;
 
-      // clear old session
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      localStorage.removeItem("user");
-
-      // save new session
       localStorage.setItem("token", token);
       localStorage.setItem("lastLogin",new Date(res.data.user.lastLogin).toLocaleString());
       localStorage.setItem("role", user.role);
-      localStorage.setItem("user", JSON.stringify(user)); // ✅ store full user
 
       if (user.role === "Admin") {
         navigate("/admin");
@@ -37,10 +30,8 @@ const Login = () => {
         navigate("/customer");
       }
     } catch (err) {
-      const msg =
-        err?.response?.data?.message ||
-        "Invalid email or password";
-      alert(msg);
+      console.error(err);
+      alert(err?.response?.data?.message || "Invalid email or password");
     }
   };
 
