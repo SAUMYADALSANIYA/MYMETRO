@@ -17,6 +17,8 @@ import CustomerChangePassword from "./pages/customer/change_pass";
 import PaymentPage from "./pages/customer/payment";
 import TicketPage from "./pages/customer/ticket";
 import ExitDemoPage from "./pages/customer/exit_demo";
+import PaymentPage from "./pages/customer/payment";
+import OAuthSuccess from "./pages/oauth-success";
 
 import "./App.css";
 
@@ -46,6 +48,10 @@ function App() {
           <Route path="ticket" element={<TicketPage />} />
           <Route path="exit-demo" element={<ExitDemoPage />} />
         </Route>
+        {/* Customer Route */}
+        <Route path="/customer" element={<CustomerHome />} />
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/oauth-success" element={<OAuthSuccess />} />
       </Routes>
     </BrowserRouter>
   );

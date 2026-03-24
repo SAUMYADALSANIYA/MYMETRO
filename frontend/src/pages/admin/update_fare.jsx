@@ -13,7 +13,7 @@ const UpdateFare = () => {
   useEffect(() => {
     const fetchFare = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/admin/get-fare", {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/get-fare`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
           }
@@ -51,7 +51,7 @@ const UpdateFare = () => {
     setLoading(true);
 
     try{
-      const res = await fetch("http://localhost:5000/api/admin/update-fare", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/admin/update-fare`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

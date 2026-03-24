@@ -14,7 +14,7 @@ const ViewUsers = () => {
     const fetchUsers = async () => {
       try{
         const res = await axios.get(
-          `http://localhost:5000/api/admin/get-users?search=${search}`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/get-users?search=${search}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -43,7 +43,7 @@ const ViewUsers = () => {
       setSelectedUser(userId);
 
       const res = await axios.get(
-        `http://localhost:5000/api/admin/user/${userId}/journeys`,
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/user/${userId}/journeys`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
