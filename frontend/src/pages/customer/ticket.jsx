@@ -30,11 +30,16 @@ export default function TicketPage() {
           <img src={ticket.qrCodeDataUrl} alt="QR Ticket" />
         </div>
 
+        <div className="ticketRow">
+          <span>Scan URL</span>
+          <span style={{ wordBreak: "break-all", fontSize: "12px" }}>{ticket.scanUrl}</span>
+        </div>
+
         <button
           className="demoBtn"
-          onClick={() => navigate("/customer/exit-demo", { state: { ticket } })}
+          onClick={() => navigate("/customer/scan/" + ticket.qrToken)}
         >
-          Simulate Exit Scan
+          Open Scan Page on this device
         </button>
       </div>
     </div>

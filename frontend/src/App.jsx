@@ -19,6 +19,7 @@ import TicketPage from "./pages/customer/ticket";
 import ExitDemoPage from "./pages/customer/exit_demo";
 import PaymentPage from "./pages/customer/payment";
 import OAuthSuccess from "./pages/oauth-success";
+import ScanTicketPage from "./pages/customer/scan_ticket";
 
 import "./App.css";
 
@@ -26,12 +27,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<LandingMap />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Admin Routes */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminHome />} />
           <Route path="update-fare" element={<UpdateFare />} />
@@ -40,13 +38,13 @@ function App() {
           <Route path="change-password" element={<ChangePassword />} />
         </Route>
 
-        {/* Customer Routes */}
         <Route path="/customer" element={<CustomerLayout />}>
           <Route index element={<CustomerHome />} />
           <Route path="change-password" element={<CustomerChangePassword />} />
           <Route path="payment" element={<PaymentPage />} />
           <Route path="ticket" element={<TicketPage />} />
           <Route path="exit-demo" element={<ExitDemoPage />} />
+          <Route path="scan/:token" element={<ScanTicketPage />} />
         </Route>
         {/* Customer Route */}
         <Route path="/customer" element={<CustomerHome />} />
