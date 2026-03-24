@@ -86,11 +86,11 @@ const UpdateFare = () => {
     <div className="fare-card">
       <form onSubmit={handleSubmit}>
         {[
-          { label: "0 - 5 km", name: "p" },
-          { label: "5 - 10 km", name: "q" },
-          { label: "10 - 15 km", name: "r" },
-          { label: "15 - 25 km", name: "s" },
-          { label: "25+ km", name: "t" }
+          { label: "1-3 stations", name: "p" },
+          { label: "4-6 stations", name: "q" },
+          { label: "7-9 stations", name: "r" },
+          { label: "10-12 stations", name: "s" },
+          { label: "12+ stations", name: "t" }
         ].map((item) => (
           <div key={item.name} className="fare-group">
             <label>{item.label}</label>

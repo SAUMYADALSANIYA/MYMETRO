@@ -61,11 +61,11 @@ const AdminHome = () => {
           <p className="loading-text">Loading fare data...</p>
         ) : (
           <div className="fare-list">
-            <div>0 - 5 km : ₹{fare.p}</div>
-            <div>5 - 10 km : ₹{fare.q}</div>
-            <div>10 - 15 km : ₹{fare.r}</div>
-            <div>15 - 25 km : ₹{fare.s}</div>
-            <div>25+ km : ₹{fare.t}</div>
+            <div> 1-3 stations: ₹{fare.p}</div>
+            <div> 4-6 stations: ₹{fare.q}</div>
+            <div> 7-9 stations: ₹{fare.r}</div>
+            <div> 10-12 stations: ₹{fare.s}</div>
+            <div>12+ stations : ₹{fare.t}</div>
           </div>
         )}
       </div>

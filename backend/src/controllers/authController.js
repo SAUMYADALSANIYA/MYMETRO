@@ -31,18 +31,20 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  try {
+  try{
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) {
+    if(!user){
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
     const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
+    if(!isMatch){
       return res.status(400).json({ message: "Invalid credentials" });
     }
+    user.lastLogin = new Date();
+    await user.save();
 
     const token = jwt.sign(
       { id: user._id, role: user.role },
@@ -56,7 +58,8 @@ export const login = async (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
-        role: user.role
+        role: user.role,
+        lastLogin: user.lastLogin
       }
     });
   } catch (error) {

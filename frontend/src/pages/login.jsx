@@ -21,6 +21,7 @@ const Login = () => {
       const { token, user } = res.data;
 
       localStorage.setItem("token", token);
+      localStorage.setItem("lastLogin",new Date(res.data.user.lastLogin).toLocaleString());
       localStorage.setItem("role", user.role);
 
       if (user.role === "Admin") {
