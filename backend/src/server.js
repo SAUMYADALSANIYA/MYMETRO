@@ -11,8 +11,6 @@ import adminRoutes from "./routes/adminRoutes.js";
 import customerRoutes from "./routes/customerRoutes.js";
 import searchRoutes from "./routes/searchRoutes.js";
 import customerMetroRoutes from "./routes/customerMetroRoutes.js";
-
-import publicRoutes from "./routes/publicRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import gateRoutes from "./routes/gateRoutes.js";
 
@@ -27,7 +25,6 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/public", publicRoutes);
 app.use("/api/customer", customerRoutes);
 app.use("/api/customer", searchRoutes);
 app.use("/api/customer", customerMetroRoutes);
@@ -61,10 +58,23 @@ const createDefaultAdmin = async () => {
   }
 };
 
-createDefaultAdmin();
-
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    console.log("MongoDB connected");
+
+    await createDefaultAdmin();
+    await seedMetroIfEmpty();
+
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Server startup error:", error);
+    process.exit(1);
+  }
+};
+
+startServer();

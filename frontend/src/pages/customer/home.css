@@ -23,8 +23,8 @@
   background: white;
   padding: 24px;
   border-radius: 14px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  margin-bottom: 24px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  margin-bottom: 28px;
 }
 
 .searchBar {
@@ -90,23 +90,6 @@
   margin-bottom: 18px;
   color: #374151;
   font-weight: 500;
-  background: #fff8e1;
-  border: 1px solid #ffe082;
-  padding: 12px 14px;
-  border-radius: 10px;
-}
-
-.customer-map-section {
-  background: white;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  margin-bottom: 28px;
-}
-
-.customer-metro-map {
-  width: 100%;
-  height: 460px;
 }
 
 .customer-cards-grid {
@@ -120,7 +103,7 @@
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   padding: 22px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.04);
 }
 
 .cardTitle {
@@ -157,28 +140,4 @@
 .bookBtn {
   width: 100%;
   margin-top: 12px;
-}
-
-@media (max-width: 900px) {
-  .customer-metro-map {
-    height: 360px;
-  }
-
-  .customer-cards-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .searchBar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .field,
-  .field select {
-    min-width: 100%;
-  }
-
-  .btn {
-    width: 100%;
-  }
 }

@@ -4,11 +4,14 @@ import "./AdminLayout.css";
 
 const AdminLayout = () => {
   const navigate = useNavigate();
-  const [lastLogin, setLastLogin] = useState(null);
+  const [lastLogin, setLastLogin] = useState("");
+
   useEffect(() => {
-    
-    const storedLogin = localStorage.getItem("lastLogin");
-    setLastLogin(storedLogin);
+    const previousLogin = localStorage.getItem("lastLogin");
+    setLastLogin(previousLogin);
+
+    const now = new Date().toLocaleString();
+    localStorage.setItem("lastLogin", now);
   }, []);
 
   const handleLogout = () => {
@@ -40,10 +43,10 @@ const AdminLayout = () => {
           </NavLink>
 
           <NavLink 
-          to="/admin/ManageAdmin"
+          to="/admin/create-admin"
           className={({ isActive }) => isActive ? "active-link" : ""}
           >
-            View Admin List
+            Create New Admin
           </NavLink>
 
           <NavLink 

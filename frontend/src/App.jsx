@@ -1,10 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import LandingMap from "./pages/LandingMap";
 import Login from "./pages/login";
 import Register from "./pages/register";
 
-import ManageAdmin from "./pages/admin/manage_admin";
+import CreateAdmin from "./pages/admin/create_admin";
 import AdminLayout from "./layouts/AdminLayout";
 import AdminHome from "./pages/admin/home";
 import UpdateFare from "./pages/admin/update_fare";
@@ -25,15 +24,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<LandingMap />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminHome />} />
           <Route path="update-fare" element={<UpdateFare />} />
-          <Route path="ManageAdmin" element={<ManageAdmin />} />
+          <Route path="create-admin" element={<CreateAdmin />} />
           <Route path="view-users" element={<ViewUsers />} />
           <Route path="change-password" element={<ChangePassword />} />
         </Route>

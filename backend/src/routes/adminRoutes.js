@@ -6,7 +6,6 @@ import {
   getFare,
   createAdmin,
   getUsers,
-  getAdmins,
   getUserJourneys,
   getDashboardStats
 } from "../controllers/adminController.js";
@@ -22,8 +21,6 @@ router.get("/get-fare", authMiddleware, getFare);
 router.post("/create-admin", authMiddleware, createAdmin);
 
 router.get("/get-users", authMiddleware, getUsers);
-
-router.get("/get-admins", authMiddleware, getAdmins);
 
 router.get("/user/:id/journeys", authMiddleware, getUserJourneys);
 

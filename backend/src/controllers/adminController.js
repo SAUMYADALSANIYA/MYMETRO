@@ -138,20 +138,6 @@ export const getUsers = async (req, res) => {
   }
 };
 
-export const getAdmins = async (req, res) => {
-  try{
-    const search = req.query.search || "";
-    const users = await User.find({
-      role: "Admin",
-      email: { $regex: search, $options: "i" }
-    }).select("email lastLogin -_id"); 
-    res.status(200).json(users);
-  }
-  catch (error){
-    res.status(500).json({ message: "Error fetching users" });
-  }
-};
-
 export const getUserJourneys = async (req, res) => {
   try{
     if(req.user.role !== "Admin"){

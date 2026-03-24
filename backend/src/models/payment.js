@@ -22,10 +22,6 @@ const paymentSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    cvv: {
-      type: String,
-      required: true
-    },
     status: {
       type: String,
       enum: ["SUCCESS", "FAILED"],

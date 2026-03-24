@@ -1,0 +1,64 @@
+.create-admin-container {
+  padding: 50px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-main);
+  text-align: center;
+}
+
+.create-admin-title {
+  font-size: 35px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.create-admin-card {
+  background-color: var(--bg-card);
+  padding: 50px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  margin: auto;
+}
+
+.create-admin-btn {
+  width: 100%;
+  padding: 16px;
+  background-color: var(--primary-dark);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.create-admin-btn:hover:not(:disabled) {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.create-admin-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.create-admin-btn:disabled {
+  background-color: var(--disabled);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.success {
+  margin-top: 20px;
+  color: #15803d;
+  font-weight: 500;
+}
+
+.error {
+  margin-top: 20px;
+  color: #b91c1c;
+  font-weight: 500;
+}
