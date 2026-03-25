@@ -97,10 +97,16 @@ export default function CustomerHome() {
       if (searchResponse && searchResponse.data) {
         const routeData = searchResponse.data;
         
+        // ADDED THE MISSING DATA TO virtualRoute SO IT PASSES TO THE PAYMENT PAGE
         const virtualRoute = {
+          routeId: routeData.routeId || routeData.linesUsed[0] || "Custom",
           routeName: routeData.interchangesRequired ? "Interchange Route" : routeData.linesUsed[0],
           color: routeData.interchangesRequired ? "#8E24AA" : (routeData.detailedPath[0]?.color || "#1E88E5"), 
+          fare: routeData.fare,             // Added exact fare
           fareRange: `₹${routeData.fare}`,
+          source: s,                        // Added source
+          destination: d,                   // Added destination
+          stops: routeData.path && routeData.path.length > 0 ? routeData.path.length - 1 : 0, // Added stops count
           estimatedDuration: `${routeData.estimatedTimeMins} mins`,
           timing: "Current Operations",
           frequency: "N/A",

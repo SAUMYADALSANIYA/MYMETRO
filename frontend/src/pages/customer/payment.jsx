@@ -13,6 +13,7 @@ export default function PaymentPage() {
   const [cvv, setCvv] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
+  const [errorMsg, setErrorMsg] = useState("");
 
   if (!metro) {
     return (
@@ -40,6 +41,7 @@ export default function PaymentPage() {
     }
 
     setResult(null);
+    setErrorMsg("");
     setLoading(true);
 
     try{
@@ -78,6 +80,8 @@ export default function PaymentPage() {
     } catch (e) {
       console.error(e);
       setResult("fail");
+      // Set the exact error message from the backend API so we know why it failed
+      setErrorMsg(e.message || "Unknown error occurred");
     } finally {
       setLoading(false);
     }
@@ -127,7 +131,12 @@ export default function PaymentPage() {
         <div className="successMsg">Payment Successful. Ticket Generated</div>
       )}
       {result === "fail" && (
-        <div className="failMsg">Payment Failed! Please Try Again</div>
+        <div className="failMsg">
+          Payment Failed!<br/>
+          <span style={{ fontSize: "14px", color: "#666", fontWeight: "normal", display: "block", marginTop: "5px"}}>
+            Reason: {errorMsg}
+          </span>
+        </div>
       )}
 
       <button className="backBtn" onClick={() => navigate(-1)}>Back</button>
