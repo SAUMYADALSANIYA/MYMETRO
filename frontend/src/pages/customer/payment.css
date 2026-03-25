@@ -1,73 +1,333 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #f0fdf4;
+  --surface: #ffffff;
+  --surface-2: #d1fae5;
+  --border: rgba(22, 163, 74, 0.15);
+  --border-active: rgba(22, 163, 74, 0.5);
+  --accent: #16a34a;
+  --accent-mid: #059669;
+  --accent-light: #16a34a;
+  --accent-glow: rgba(22, 163, 74, 0.1);
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --success: #16a34a;
+  --success-bg: rgba(22, 163, 74, 0.08);
+  --error: #dc2626;
+  --error-bg: rgba(220, 38, 38, 0.06);
+  --fare-gradient: linear-gradient(135deg, #16a34a, #059669);
+}
+
+body {
+  background: var(--bg);
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* ── Page Layout ── */
 .paymentPage {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  min-height: 100vh;
+  padding: 40px 20px 60px;
+  background:
+    radial-gradient(ellipse 60% 40% at 70% 0%, rgba(22, 163, 74, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 10% 80%, rgba(5, 150, 105, 0.04) 0%, transparent 60%),
+    var(--bg);
 }
 
+/* ── Header ── */
+.paymentPage > h1 {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.paymentPage > h1::before,
+.paymentPage > h1::after {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 1px;
+  background: var(--text-muted);
+}
+
+/* ── Card ── */
 .paymentCard {
-  width: 350px;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background: white;
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(22, 163, 74, 0.07), 0 1px 4px rgba(15, 23, 42, 0.05);
 }
 
+.paymentCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(22, 163, 74, 0.4), transparent);
+}
+
+/* ── Trip Summary ── */
+.tripSummary {
+  background: var(--surface-2);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 22px;
+  border: 1px solid rgba(22, 163, 74, 0.2);
+}
+
+/* ── Row ── */
 .row {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
+  align-items: center;
+  padding: 7px 0;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(22, 163, 74, 0.12);
 }
 
-.fare {
-  font-size: 20px;
-  font-weight: bold;
+.row:last-child {
+  border-bottom: none;
 }
 
+.row > span:first-child {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.row > span:last-child {
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* ── Fare Row ── */
+.row.fare {
+  padding-top: 14px;
+  margin-top: 6px;
+  border-top: 1px solid rgba(22, 163, 74, 0.2);
+  border-bottom: none;
+}
+
+.row.fare > span:first-child {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.row.fare > span:last-child {
+  font-family: 'Space Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  background: var(--fare-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Section Label ── */
+.sectionLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+/* ── Inputs ── */
+.paymentCard input {
+  width: 100%;
+  padding: 13px 16px;
+  margin-bottom: 12px;
+  background: #f8fffe;
+  border: 1px solid rgba(22, 163, 74, 0.2);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.paymentCard input::placeholder {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.paymentCard input:focus {
+  border-color: var(--border-active);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+/* last input no margin */
+.paymentCard input:last-of-type {
+  margin-bottom: 0;
+}
+
+/* ── Pay Button ── */
 .payBtn {
   width: 100%;
-  padding: 10px;
+  padding: 14px;
   margin-top: 20px;
-  background: #3399cc;
-  color: white;
+  background: linear-gradient(135deg, #16a34a, #059669);
+  color: #ffffff;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
   cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
 }
 
-.backBtn {
-  margin-top: 20px;
+.payBtn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 100%);
+  pointer-events: none;
 }
 
+.payBtn:hover:not(:disabled) {
+  box-shadow: 0 6px 24px rgba(22, 163, 74, 0.35);
+  transform: translateY(-1px);
+}
+
+.payBtn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.payBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Loader ── */
 .loader {
   margin-top: 20px;
-  font-size: 18px;
-  color: blue;
-  animation: blink 1s infinite;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-@keyframes blink {
-  0% { opacity: 1; }
-  50% { opacity: 0.3; }
-  100% { opacity: 1; }
+.loader::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(22, 163, 74, 0.2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Status Messages ── */
+.successMsg,
+.failMsg {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: fadeSlideUp 0.3s ease;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .successMsg {
-  margin-top: 20px;
-  color: green;
-  font-weight: bold;
+  background: var(--success-bg);
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  color: var(--success);
 }
 
 .failMsg {
-  margin-top: 20px;
-  color: red;
-  font-weight: bold;
+  background: var(--error-bg);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  color: var(--error);
 }
 
-.paymentCard input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+.failMsg span {
+  font-size: 13px !important;
+  color: var(--text-secondary) !important;
+  font-weight: 400 !important;
+  margin-top: 2px !important;
+  display: block !important;
+}
+
+/* ── Back Button ── */
+.backBtn {
+  margin-top: 16px;
+  padding: 10px 24px;
+  background: transparent;
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.backBtn:hover {
+  border-color: rgba(22, 163, 74, 0.45);
+  color: var(--text-primary);
+  background: rgba(22, 163, 74, 0.05);
+}
+
+/* ── No-Trip State ── */
+.paymentPage > h2 {
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
 }

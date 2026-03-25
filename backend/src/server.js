@@ -40,25 +40,33 @@ app.use(passport.session());
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:5001/auth/google/callback"
+  callbackURL: "http://localhost:5001/auth/google/callback",
+  passReqToCallback: true
 },
-async (accessToken, refreshToken, profile, done) => {
+async (req, accessToken, refreshToken, profile, done) => {
   try {
+    
     const email = profile.emails[0].value;
 
     let user = await User.findOne({ email });
 
     if (!user) {
+      
+
       user = await User.create({
-        username: profile.emails[0].value.split("@")[0] + Date.now(),
-        email: email,
-        password: "google_oauth",
-        role: "Customer"
-      });
+  email,
+  googleId: profile.id,
+  role: "Customer"
+});
+
+       
+    } else {
+      console.log("User already exists"); 
     }
 
     return done(null, user);
   } catch (error) {
+    console.error("Google Auth Error:", error); 
     return done(error, null);
   }
 }));
@@ -74,7 +82,10 @@ app.use("/api/gate", gateRoutes);
 
 
 app.get("/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  passport.authenticate("google", { 
+    scope: ["profile", "email"],
+    prompt: "select_account consent"
+  })
 );
 
 app.get("/auth/google/callback",

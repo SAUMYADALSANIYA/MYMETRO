@@ -6,7 +6,6 @@ import "./payment.css";
 export default function PaymentPage() {
   const location = useLocation();
   const navigate = useNavigate();
-
   const metro = location.state;
   const [cardNumber, setCardNumber] = useState("");
   const [name, setName] = useState("");
@@ -25,28 +24,24 @@ export default function PaymentPage() {
   }
 
   async function handlePayment() {
-    if(cardNumber.length !== 16) {
+    if (cardNumber.length !== 16) {
       alert("Card number must be 16 digits");
       return;
     }
-
     if (!name.trim()) {
       alert("Please enter card holder name");
       return;
     }
-
     if (cvv.length !== 3) {
       alert("CVV must be 3 digits");
       return;
     }
-
     setResult(null);
     setErrorMsg("");
     setLoading(true);
-
-    try{
+    try {
       let data;
-      if(metro.parentTicketId){
+      if (metro.parentTicketId) {
         data = await payExtraFare({
           parentTicketId: metro.parentTicketId,
           routeId: metro.routeId,
@@ -55,10 +50,9 @@ export default function PaymentPage() {
           destination: metro.destination,
           cardNumber,
           cardHolder: name,
-          cvv
+          cvv,
         });
-      }
-      else {
+      } else {
         data = await payTicket({
           routeId: metro.routeId,
           routeName: metro.routeName,
@@ -66,15 +60,13 @@ export default function PaymentPage() {
           destination: metro.destination,
           cardNumber,
           cardHolder: name,
-          cvv
+          cvv,
         });
       }
-
       setResult("success");
-
       setTimeout(() => {
         navigate("/customer/ticket", {
-          state: { ticket: data.ticket }
+          state: { ticket: data.ticket },
         });
       }, 1000);
     } catch (e) {
@@ -92,12 +84,17 @@ export default function PaymentPage() {
       <h1>Metro Ticket Payment</h1>
 
       <div className="paymentCard">
-        <div className="row"><span>Route</span><span>{metro.routeName}</span></div>
-        <div className="row"><span>From</span><span>{metro.source}</span></div>
-        <div className="row"><span>To</span><span>{metro.destination}</span></div>
-        <div className="row"><span>Stops</span><span>{metro.stops}</span></div>
-        <div className="row fare"><span>Total Fare</span><span>₹{metro.fare}</span></div>
+        {/* Trip summary block */}
+        <div className="tripSummary">
+          <div className="row"><span>Route</span><span>{metro.routeName}</span></div>
+          <div className="row"><span>From</span><span>{metro.source}</span></div>
+          <div className="row"><span>To</span><span>{metro.destination}</span></div>
+          <div className="row"><span>Stops</span><span>{metro.stops}</span></div>
+          <div className="row fare"><span>Total Fare</span><span>₹{metro.fare}</span></div>
+        </div>
 
+        {/* Card details */}
+        <p className="sectionLabel">Card Details</p>
         <input
           type="text"
           placeholder="Card Number"
@@ -105,14 +102,12 @@ export default function PaymentPage() {
           maxLength={16}
           onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, ""))}
         />
-
         <input
           type="text"
           placeholder="Card Holder Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-
         <input
           type="password"
           placeholder="CVV"
@@ -126,14 +121,16 @@ export default function PaymentPage() {
         </button>
       </div>
 
-      {loading && <div className="loader">Processing Payment...</div>}
+      {loading && <div className="loader">Processing Payment</div>}
+
       {result === "success" && (
         <div className="successMsg">Payment Successful. Ticket Generated</div>
       )}
+
       {result === "fail" && (
         <div className="failMsg">
-          Payment Failed!<br/>
-          <span style={{ fontSize: "14px", color: "#666", fontWeight: "normal", display: "block", marginTop: "5px"}}>
+          Payment Failed!
+          <span style={{ fontSize: "14px", color: "#666", fontWeight: "normal", display: "block", marginTop: "5px" }}>
             Reason: {errorMsg}
           </span>
         </div>
