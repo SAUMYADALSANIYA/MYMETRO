@@ -1,184 +1,205 @@
 .customer-dashboard-page {
   width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding-bottom: 20px;
 }
 
 .customer-dashboard-header {
-  text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 12px;
 }
 
 .customer-dashboard-header h1 {
-  font-size: 2.3rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 8px;
+  color: #1F2937;
+  letter-spacing: -0.5px;
 }
 
-.customer-dashboard-header p {
-  color: #6b7280;
-  font-size: 1rem;
+/* 1. HORIZONTAL STATUS BAR */
+.customer-message-bar {
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 16px;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
+/* 2. SEARCH SECTION */
 .customer-search-section {
   background: white;
-  padding: 24px;
-  border-radius: 14px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  margin-bottom: 24px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  margin-bottom: 20px;
+  border: 1px solid #F3F4F6;
 }
 
 .searchBar {
   display: flex;
   gap: 16px;
-  align-items: end;
+  align-items: flex-end;
   flex-wrap: wrap;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-width: 220px;
+  gap: 6px;
+  flex: 1;
+  min-width: 200px;
 }
 
 .field label {
   font-weight: 600;
-  color: #2c3e50;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #4B5563;
 }
 
 .field select {
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid #d1d5db;
-  background: white;
-  color: #111;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #D1D5DB;
+  background: #F9FAFB;
+  color: #111827;
   outline: none;
-  min-width: 220px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
 }
 
-.customer-dashboard-page select {
-  color: #111 !important;
-  background: #fff !important;
-}
-
-.customer-dashboard-page option {
-  color: #111 !important;
-  background: #fff !important;
-}
-
-.customer-dashboard-page optgroup {
-  color: #111 !important;
-  background: #fff !important;
+.field select:focus {
+  border-color: #3B82F6;
+  background: white;
 }
 
 .btn {
-  padding: 12px 20px;
-  border-radius: 10px;
-  border: 1px solid #111;
+  padding: 11px 20px;
+  border-radius: 8px;
+  border: none;
   background: #111;
   color: white;
   cursor: pointer;
   font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.btn:hover {
+  background: #374151;
 }
 
 .btnOutline {
   background: white;
   color: #111;
+  border: 1px solid #D1D5DB;
 }
 
-.customer-message {
-  margin-bottom: 18px;
-  color: #374151;
-  font-weight: 500;
-  background: #fff8e1;
-  border: 1px solid #ffe082;
-  padding: 12px 14px;
-  border-radius: 10px;
+.btnOutline:hover {
+  background: #F9FAFB;
 }
 
-.customer-map-section {
+/* 3. MAP AND OVERLAY */
+.customer-map-wrapper {
+  position: relative; /* Crucial for overlay positioning */
   background: white;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  margin-bottom: 28px;
+  padding: 6px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid #E5E7EB;
+  width: 100%;
 }
 
 .customer-metro-map {
   width: 100%;
-  height: 460px;
+  height: 65vh; /* Takes up most of the screen so no scrolling is needed */
+  min-height: 480px;
+  border-radius: 12px;
 }
 
-.customer-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-  gap: 20px;
-}
-
-.card {
-  background: white;
-  border: 1px solid #e5e7eb;
+/* THE FLOATING CARD ON TOP OF THE MAP */
+.map-overlay-card {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 1000; /* Stays above Leaflet tiles */
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 20px 24px;
   border-radius: 14px;
-  padding: 22px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  width: 280px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
-.cardTitle {
-  font-size: 1.7rem;
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 14px;
+.map-overlay-card h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1F2937;
+  text-align: center;
 }
 
-.cardRow {
+.overlay-row {
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 12px;
-  align-items: flex-start;
+  font-size: 0.95rem;
 }
 
-.label {
-  min-width: 95px;
-  font-weight: 700;
+.overlay-row span {
+  color: #6B7280;
+  font-weight: 600;
+}
+
+.overlay-row strong {
   color: #111827;
+  font-weight: 700;
 }
 
-.value {
-  color: #374151;
-  line-height: 1.6;
-}
-
-.divider {
+.overlay-divider {
   height: 1px;
-  background: #e5e7eb;
+  background: #E5E7EB;
   margin: 16px 0;
 }
 
 .bookBtn {
   width: 100%;
-  margin-top: 12px;
+  padding: 12px;
+  background-color: #3B82F6;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
-@media (max-width: 900px) {
+.bookBtn:hover {
+  background-color: #2563EB;
+}
+
+@media (max-width: 768px) {
+  .map-overlay-card {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: auto;
+    margin-top: 16px;
+    box-shadow: none;
+    border: 1px solid #E5E7EB;
+  }
   .customer-metro-map {
-    height: 360px;
-  }
-
-  .customer-cards-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .searchBar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .field,
-  .field select {
-    min-width: 100%;
-  }
-
-  .btn {
-    width: 100%;
+    height: 50vh;
   }
 }

@@ -4,7 +4,6 @@ import "./home.css";
 
 import { getAllMetros, searchMetro } from "./api";
 import CustomerSearchBar from "./components/CustomerSearchBar";
-import CustomerMetroCard from "./components/CustomerMetroCard";
 import CustomerMetroMap from "./components/CustomerMetroMap";
 
 function mapMetroResponse(metros) {
@@ -53,7 +52,6 @@ export default function CustomerHome() {
     return [...new Set(metroData.flatMap((route) => route.stations.map((s) => s.name)))].sort();
   }, [metroData]);
 
-  // Find map coordinates for a station
   function getStationCoords(stationName) {
     for (const route of metroData) {
       const st = route.stations.find((s) => s.name === stationName);
@@ -62,12 +60,11 @@ export default function CustomerHome() {
     return { lat: 0, lng: 0 };
   }
 
-  // Detect exactly which station is the interchange
   function findInterchange(detailedPath) {
     if (!detailedPath || detailedPath.length < 2) return null;
     for (let i = 1; i < detailedPath.length; i++) {
       if (detailedPath[i].line !== detailedPath[i - 1].line) {
-        return detailedPath[i - 1].station; // The station before the line swapped
+        return detailedPath[i - 1].station;
       }
     }
     return null;
@@ -81,14 +78,14 @@ export default function CustomerHome() {
     const d = destination.trim();
 
     if (!s || !d) {
-      setMsg("Please choose source and destination");
+      setMsg("Please choose source and destination.");
       setResults([]);
       setMode("search");
       return;
     }
 
     if (s === d) {
-      setMsg("Source and destination cannot be same");
+      setMsg("Source and destination cannot be the same.");
       setResults([]);
       setMode("search");
       return;
@@ -100,10 +97,9 @@ export default function CustomerHome() {
       if (searchResponse && searchResponse.data) {
         const routeData = searchResponse.data;
         
-        // Construct our route with interchange info included
         const virtualRoute = {
           routeName: routeData.interchangesRequired ? "Interchange Route" : routeData.linesUsed[0],
-          color: routeData.interchangesRequired ? "#9C27B0" : (routeData.detailedPath[0]?.color || "#1E88E5"), 
+          color: routeData.interchangesRequired ? "#8E24AA" : (routeData.detailedPath[0]?.color || "#1E88E5"), 
           fareRange: `₹${routeData.fare}`,
           estimatedDuration: `${routeData.estimatedTimeMins} mins`,
           timing: "Current Operations",
@@ -116,9 +112,9 @@ export default function CustomerHome() {
         };
 
         if (routeData.interchangesRequired) {
-          setMsg(`Interchange required! Lines used: ${routeData.linesUsed.join(" -> ")}`);
+          setMsg(`🔄 Interchange required at ${virtualRoute.interchangeStation}`);
         } else {
-          setMsg("Direct route found.");
+          setMsg("✅ Direct route found.");
         }
 
         setResults([virtualRoute]);
@@ -128,7 +124,7 @@ export default function CustomerHome() {
       console.error(err);
       setResults([]);
       setMode("search");
-      setMsg(err.message || "Route not found between these stations.");
+      setMsg("❌ " + (err.message || "Route not found between these stations."));
     }
   }
 
@@ -148,29 +144,31 @@ export default function CustomerHome() {
     return mode === "all" ? metroData : results;
   }, [mode, metroData, results]);
 
-  if (loading) {
-    return (
-      <div className="customer-dashboard-page">
-        <p style={{ padding: "2rem" }}>Loading metro data…</p>
-      </div>
-    );
-  }
+  const isSearchMode = mode === "search" && results.length === 1;
+  const activeRoute = isSearchMode ? results[0] : null;
 
-  if (fetchError) {
-    return (
-      <div className="customer-dashboard-page">
-        <p style={{ padding: "2rem", color: "red" }}>{fetchError}</p>
-      </div>
-    );
-  }
+  if (loading) return <div className="customer-dashboard-page"><p style={{ padding: "2rem" }}>Loading metro map…</p></div>;
+  if (fetchError) return <div className="customer-dashboard-page"><p style={{ padding: "2rem", color: "red" }}>{fetchError}</p></div>;
 
   return (
     <div className="customer-dashboard-page">
+      
       <div className="customer-dashboard-header">
-        <h1>Ahmedabad Metro Dashboard</h1>
-        <p>Search metro routes, timings, frequency and fare on the map</p>
+        <h1>Ahmedabad Metro Journey</h1>
       </div>
 
+      {/* 1. MESSAGE / STATUS BAR ON TOP */}
+      {msg && (
+        <div className="customer-message-bar" style={{
+          backgroundColor: msg.includes("Interchange") ? "#F3E5F5" : msg.includes("✅") ? "#E8F5E9" : "#fee2e2",
+          color: msg.includes("Interchange") ? "#6A1B9A" : msg.includes("✅") ? "#2E7D32" : "#991b1b",
+          borderColor: msg.includes("Interchange") ? "#d8b4fe" : msg.includes("✅") ? "#bbf7d0" : "#fecaca"
+        }}>
+          {msg}
+        </div>
+      )}
+
+      {/* 2. SEARCH BAR */}
       <div className="customer-search-section">
         <CustomerSearchBar
           stations={allStations}
@@ -183,33 +181,44 @@ export default function CustomerHome() {
         />
       </div>
 
-      {msg && <div className="customer-message" style={{
-        backgroundColor: msg.includes("Interchange") ? "#E1BEE7" : "#E8F5E9",
-        color: msg.includes("Interchange") ? "#4A148C" : "#1B5E20",
-        fontWeight: "bold",
-        padding: "10px",
-        borderRadius: "4px",
-        margin: "10px 0"
-      }}>{msg}</div>}
+      {/* 3. FULL WIDTH MAP WITH FLOATING OVERLAY */}
+      <div className="customer-map-wrapper">
+        <CustomerMetroMap
+          routes={metroData}
+          highlightedRoutes={list}
+          source={source}
+          destination={destination}
+        />
 
-      <CustomerMetroMap
-        routes={metroData}
-        highlightedRoutes={list}
-        source={source}
-        destination={destination}
-      />
+        {/* FLOATING OVERLAY CARD INSIDE THE MAP */}
+        {isSearchMode && activeRoute && (
+          <div className="map-overlay-card">
+            <h3>{activeRoute.routeName}</h3>
+            
+            <div className="overlay-row">
+              <span>Duration:</span>
+              <strong>{activeRoute.estimatedDuration}</strong>
+            </div>
+            
+            <div className="overlay-row">
+              <span>Fare:</span>
+              <strong style={{ fontSize: '1.2rem', color: '#16a34a' }}>{activeRoute.fareRange}</strong>
+            </div>
+            
+            <div className="overlay-row">
+              <span>Stops:</span>
+              <strong>{activeRoute.stations.length > 0 ? `${activeRoute.stations.length - 1} stations` : "N/A"}</strong>
+            </div>
 
-      <div className="customer-cards-grid">
-        {list.map((metro) => (
-          <CustomerMetroCard
-            key={metro.routeName}
-            metro={metro}
-            source={source}
-            destination={destination}
-            onBook={onBook} 
-          />
-        ))}
+            <div className="overlay-divider"></div>
+
+            <button className="bookBtn" onClick={() => onBook(activeRoute)}>
+              Book Ticket
+            </button>
+          </div>
+        )}
       </div>
+
     </div>
   );
 }
