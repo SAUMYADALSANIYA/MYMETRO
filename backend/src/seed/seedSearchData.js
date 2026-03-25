@@ -13,25 +13,45 @@ async function run() {
   await mongoose.connect(process.env.MONGO_URI);
   console.log("MongoDB connected for seeding");
 
-  // Clear old sample (optional)
-  await Route.deleteMany({ routeName: "Blue Line" });
-  // schedules will be removed by routeId matching? not automatic, so clean them too:
-  // (safe for sample route only)
-  // We'll insert new route first, then delete schedules for that route only if needed.
+  // Clear old data
+  await Route.deleteMany({});
+  await Schedule.deleteMany({});
 
-  const route = await Route.create({
+  // 1. Blue Line (A -> X -> Y -> B)
+  const blueLine = await Route.create({
     routeName: "Blue Line",
-    stations: ["A", "X", "Y", "B"]
+    color: "#1E88E5",
+    stations: [
+      { name: "A", lat: 28.6139, lng: 77.2090 },
+      { name: "X", lat: 28.6200, lng: 77.2100 }, // Intersection station
+      { name: "Y", lat: 28.6300, lng: 77.2200 },
+      { name: "B", lat: 28.6400, lng: 77.2300 }
+    ]
   });
 
-  await Schedule.create({
-    routeId: route._id,
-    startTime: "08:00",
-    endTime: "22:00",
-    frequencyMins: 10
+  // 2. Red Line (C -> X -> D -> E)
+  const redLine = await Route.create({
+    routeName: "Red Line",
+    color: "#E53935",
+    stations: [
+      { name: "C", lat: 28.6100, lng: 77.2000 },
+      { name: "X", lat: 28.6200, lng: 77.2100 }, // Intersection station
+      { name: "D", lat: 28.6250, lng: 77.2150 },
+      { name: "E", lat: 28.6350, lng: 77.2250 }
+    ]
   });
 
-  console.log("Seeded: Blue Line A -> B");
+  // Create Schedules
+  await Schedule.create([
+    { routeId: blueLine._id, startTime: "06:00", endTime: "23:00", frequencyMins: 10 },
+    { routeId: redLine._id, startTime: "06:00", endTime: "23:00", frequencyMins: 8 }
+  ]);
+
+  console.log("Seeded Graph Network:");
+  console.log("Blue Line: A <-> X <-> Y <-> B");
+  console.log("Red Line : C <-> X <-> D <-> E");
+  console.log("Intersection at: X");
+
   await mongoose.disconnect();
 }
 

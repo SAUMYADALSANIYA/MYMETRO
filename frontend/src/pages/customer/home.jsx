@@ -2,14 +2,14 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./home.css";
 
-import { getAllMetros } from "./api";
+import { getAllMetros, searchMetro } from "./api";
 import CustomerSearchBar from "./components/CustomerSearchBar";
 import CustomerMetroCard from "./components/CustomerMetroCard";
 import CustomerMetroMap from "./components/CustomerMetroMap";
 
 function mapMetroResponse(metros) {
   return metros.map((m) => ({
-    ...m, // Keep original data for the payment page
+    ...m,
     routeName:         m.routeName,
     color:             m.color || "#1E88E5",
     fareRange:         m.fareRange || "",
@@ -25,7 +25,6 @@ function mapMetroResponse(metros) {
 }
 
 export default function CustomerHome() {
-  // Combined from main and saumya
   const navigate = useNavigate();
   const [metroData, setMetroData]   = useState([]);
   const [loading, setLoading]       = useState(true);
@@ -54,17 +53,27 @@ export default function CustomerHome() {
     return [...new Set(metroData.flatMap((route) => route.stations.map((s) => s.name)))].sort();
   }, [metroData]);
 
-  function findMatchingRoutes(sourceStation, destinationStation) {
-    return metroData.filter((route) => {
-      const stationNames = route.stations.map((station) => station.name);
-      return (
-        stationNames.includes(sourceStation) &&
-        stationNames.includes(destinationStation)
-      );
-    });
+  // Find map coordinates for a station
+  function getStationCoords(stationName) {
+    for (const route of metroData) {
+      const st = route.stations.find((s) => s.name === stationName);
+      if (st) return { lat: st.lat, lng: st.lng };
+    }
+    return { lat: 0, lng: 0 };
   }
 
-  function onSearch(e) {
+  // Detect exactly which station is the interchange
+  function findInterchange(detailedPath) {
+    if (!detailedPath || detailedPath.length < 2) return null;
+    for (let i = 1; i < detailedPath.length; i++) {
+      if (detailedPath[i].line !== detailedPath[i - 1].line) {
+        return detailedPath[i - 1].station; // The station before the line swapped
+      }
+    }
+    return null;
+  }
+
+  async function onSearch(e) {
     e.preventDefault();
     setMsg("");
 
@@ -85,19 +94,42 @@ export default function CustomerHome() {
       return;
     }
 
-    const matchedRoutes = findMatchingRoutes(s, d);
+    try {
+      const searchResponse = await searchMetro(s, d);
+      
+      if (searchResponse && searchResponse.data) {
+        const routeData = searchResponse.data;
+        
+        // Construct our route with interchange info included
+        const virtualRoute = {
+          routeName: routeData.interchangesRequired ? "Interchange Route" : routeData.linesUsed[0],
+          color: routeData.interchangesRequired ? "#9C27B0" : (routeData.detailedPath[0]?.color || "#1E88E5"), 
+          fareRange: `₹${routeData.fare}`,
+          estimatedDuration: `${routeData.estimatedTimeMins} mins`,
+          timing: "Current Operations",
+          frequency: "N/A",
+          stations: routeData.path.map(stationName => ({
+            name: stationName,
+            ...getStationCoords(stationName)
+          })),
+          interchangeStation: routeData.interchangesRequired ? findInterchange(routeData.detailedPath) : null
+        };
 
-    if (matchedRoutes.length > 0) {
-      setResults(matchedRoutes);
+        if (routeData.interchangesRequired) {
+          setMsg(`Interchange required! Lines used: ${routeData.linesUsed.join(" -> ")}`);
+        } else {
+          setMsg("Direct route found.");
+        }
+
+        setResults([virtualRoute]);
+        setMode("search");
+      }
+    } catch (err) {
+      console.error(err);
+      setResults([]);
       setMode("search");
-      return;
+      setMsg(err.message || "Route not found between these stations.");
     }
-
-    setResults([]);
-    setMode("search");
-    setMsg(
-      "Direct same-line route not found. Interchange route support can be added next."
-    );
   }
 
   function onShowAll() {
@@ -108,12 +140,10 @@ export default function CustomerHome() {
     setDestination("");
   }
 
-  // Combined from main branch
   function onBook(metro) {
     navigate("/customer/payment", { state: metro });
   }
 
-  // Combined from saumya branch
   const list = useMemo(() => {
     return mode === "all" ? metroData : results;
   }, [mode, metroData, results]);
@@ -153,7 +183,14 @@ export default function CustomerHome() {
         />
       </div>
 
-      {msg && <div className="customer-message">{msg}</div>}
+      {msg && <div className="customer-message" style={{
+        backgroundColor: msg.includes("Interchange") ? "#E1BEE7" : "#E8F5E9",
+        color: msg.includes("Interchange") ? "#4A148C" : "#1B5E20",
+        fontWeight: "bold",
+        padding: "10px",
+        borderRadius: "4px",
+        margin: "10px 0"
+      }}>{msg}</div>}
 
       <CustomerMetroMap
         routes={metroData}
