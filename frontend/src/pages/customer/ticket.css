@@ -1,45 +1,125 @@
+/* Page layout */
 .ticketPage {
   display: flex;
   justify-content: center;
-  padding: 40px;
+  margin-top: 30px;
 }
 
-.ticketCard {
-  width: 420px;
+/* PDF container (controls full page) */
+.pdfContainer.print-mode {
+  width: 210mm;
+  padding: 15mm;   /* slightly reduced */
   background: white;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  box-sizing: border-box;
 }
 
-.ticketCard h1 {
-  margin-bottom: 20px;
+/* Ticket card */
+.ticketCard {
+  width: 90%;
+  max-width: 700px;
+  margin: auto;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  border: 2px solid #ddd;
+  background: white;
+  page-break-inside: avoid;
+}
+
+/* Header */
+.ticketHeader {
+  background: #184199;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.ticketHeader h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.ticketHeader p {
+  margin: 5px 0 0;
+  font-size: 14px;
+}
+
+/* Body */
+.ticketBody {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+/* Left section */
+.left {
+  width: 55%;
 }
 
 .ticketRow {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
+  margin-bottom: 12px;
+  font-size: 16px;
 }
 
-.qrBox {
+/* Right section */
+.right {
+  width: 40%;
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  align-items: center;
+}
+
+/* QR box */
+.qrBox {
+  border: 2px dashed #ccc;
+  padding: 10px;
 }
 
 .qrBox img {
-  width: 220px;
-  height: 220px;
-  object-fit: contain;
+  width: 150px;
+  height: 150px;
+}
+
+/* Footer */
+.ticketFooter {
+  border-top: 1px solid #eee;
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.scanUrl {
+  word-break: break-all;
+  color: #666;
+}
+
+/* Buttons */
+.demoBtn,
+.pdfBtn {
+  margin: 10px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .demoBtn {
-  width: 100%;
-  padding: 12px;
-  background: #111;
+  background: black;
   color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+}
+
+.pdfBtn {
+  background: #2d89ef;
+  color: white;
+}
+
+/* Hide buttons in PDF */
+.no-print {
+  display: inline-block;
+}
+
+.print-mode .no-print {
+  display: none !important;
 }
