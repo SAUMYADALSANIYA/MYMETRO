@@ -1,5 +1,6 @@
 import User from "../models/user.js";
 import jwt from "jsonwebtoken";
+ import bcrypt from "bcrypt";
 
 export const register = async (req, res) => {
   try {
@@ -26,7 +27,7 @@ export const register = async (req, res) => {
       });
     }
 
-    const hashedPassword = await User.hashPassword(password);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
       email,
@@ -50,20 +51,29 @@ export const register = async (req, res) => {
     });
   }
 };
-
 export const login = async (req, res) => {
-  try{
+  try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if(!user){
+
+    if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
+    // ✅ FIX: Google users cannot login with password
+    if (!user.password) {
+      return res.status(400).json({
+        message: "Please login using Google"
+      });
+    }
+
     const isMatch = await user.comparePassword(password);
-    if(!isMatch){
+
+    if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
+
     user.lastLogin = new Date();
     await user.save();
 
@@ -77,19 +87,16 @@ export const login = async (req, res) => {
       token,
       user: {
         id: user._id,
-        
         email: user.email,
-        role: user.role,
-        lastLogin: user.lastLogin
+        role: user.role
       }
     });
-  }
-  catch (error){
+
+  } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ message: "Server Error" });
   }
 };
-
 export const changePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
@@ -120,7 +127,9 @@ export const changePassword = async (req, res) => {
       return res.status(400).json({ message: "Old password is incorrect" });
     }
 
-    const hashedPassword = await User.hashPassword(newPassword);
+   
+
+const hashedPassword = await bcrypt.hash(password, 10);
     user.password = hashedPassword;
     await user.save();
 

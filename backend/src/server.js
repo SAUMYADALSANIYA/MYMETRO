@@ -45,28 +45,32 @@ passport.use(new GoogleStrategy({
 },
 async (req, accessToken, refreshToken, profile, done) => {
   try {
-    
     const email = profile.emails[0].value;
 
-    let user = await User.findOne({ email });
+    // 🔥 check by googleId
+    let user = await User.findOne({ googleId: profile.id });
 
     if (!user) {
-      
+      // 🔥 check by email
+      user = await User.findOne({ email });
 
-      user = await User.create({
-  email,
-  googleId: profile.id,
-  role: "Customer"
-});
-
-       
-    } else {
-      console.log("User already exists"); 
+      if (user) {
+        // link Google account
+        user.googleId = profile.id;
+        await user.save();
+      } else {
+        // create new user
+        user = await User.create({
+          email,
+          googleId: profile.id,
+          role: "Customer"
+        });
+      }
     }
 
     return done(null, user);
+
   } catch (error) {
-    console.error("Google Auth Error:", error); 
     return done(error, null);
   }
 }));
