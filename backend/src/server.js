@@ -13,7 +13,7 @@ import searchRoutes from "./routes/searchRoutes.js";
 import customerMetroRoutes from "./routes/customerMetroRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import gateRoutes from "./routes/gateRoutes.js";
-import paymentRoutes from "./routes/paymentRoutes.js";
+import publicRoutes from "./routes/publicRoutes.js"
 import session from "express-session";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";

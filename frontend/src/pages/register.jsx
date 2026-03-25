@@ -1,4 +1,3 @@
-// src/pages/register.jsx
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
@@ -54,6 +53,10 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    if(!password || password.length < 8) {
+      alert("Password must be at least 8 characters long");
+      return;
+    }
     setLoading(true);
     try {
       await axios.post(
@@ -62,9 +65,11 @@ const Register = () => {
       );
       alert("Registration successful!");
       navigate("/");
-    } catch (err) {
+    }
+    catch (err) {
       alert(err.response?.data?.message || "Registration failed");
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };

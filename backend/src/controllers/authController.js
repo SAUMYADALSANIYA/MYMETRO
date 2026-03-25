@@ -6,6 +6,11 @@ export const register = async (req, res) => {
     console.log("REGISTER API HIT");
 
     const { username, email, password } = req.body;
+    if(!password || password.length < 8){
+      return res.status(400).json({
+        message: "Password must be at least 8 characters long"
+      });
+    }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -62,7 +67,8 @@ export const login = async (req, res) => {
         lastLogin: user.lastLogin
       }
     });
-  } catch (error) {
+  }
+  catch (error){
     console.error("Login error:", error);
     res.status(500).json({ message: "Server Error" });
   }
@@ -82,7 +88,7 @@ export const changePassword = async (req, res) => {
       });
     }
 
-    if (newPassword.length < 8) {
+    if(newPassword.length < 8) {
       return res.status(400).json({
         message: "New password must be at least 8 characters long"
       });

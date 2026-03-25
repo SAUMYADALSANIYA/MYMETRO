@@ -17,7 +17,6 @@ import CustomerChangePassword from "./pages/customer/change_pass";
 import PaymentPage from "./pages/customer/payment";
 import TicketPage from "./pages/customer/ticket";
 import ExitDemoPage from "./pages/customer/exit_demo";
-import PaymentPage from "./pages/customer/payment";
 import OAuthSuccess from "./pages/oauth-success";
 import ScanTicketPage from "./pages/customer/scan_ticket";
 
