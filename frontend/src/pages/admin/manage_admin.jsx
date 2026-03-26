@@ -46,7 +46,7 @@ const ManageAdmin = () => {
       setFetching(true);
 
       const res = await axios.get(
-        "http://localhost:5000/api/admin/get-admins",
+        `${import.meta.env.VITE_API_BASE_URL}/api/admin/get-admins`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
