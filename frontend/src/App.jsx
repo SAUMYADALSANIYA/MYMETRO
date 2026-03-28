@@ -19,6 +19,7 @@ import TicketPage from "./pages/customer/ticket";
 import ExitDemoPage from "./pages/customer/exit_demo";
 import OAuthSuccess from "./pages/oauth-success";
 import ScanTicketPage from "./pages/customer/scan_ticket";
+import CustomerHistory from "./pages/customer/history";
 
 import "./App.css";
 
@@ -40,6 +41,7 @@ function App() {
         <Route path="/customer" element={<CustomerLayout />}>
           <Route index element={<CustomerHome />} />
           <Route path="change-password" element={<CustomerChangePassword />} />
+          <Route path="history" element={<CustomerHistory />} />
           <Route path="payment" element={<PaymentPage />} />
           <Route path="ticket" element={<TicketPage />} />
           <Route path="exit-demo" element={<ExitDemoPage />} />

@@ -59,6 +59,14 @@ const CustomerLayout = () => {
           >
             Change Password
           </NavLink>
+          <NavLink
+  to="/customer/history"
+  className={({ isActive }) =>
+    isActive ? "customer-active-link" : ""
+  }
+>
+  View History
+</NavLink>
         </nav>
 
         <button className="customer-logout-btn" onClick={handleLogout}>

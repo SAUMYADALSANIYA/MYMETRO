@@ -1,0 +1,32 @@
+
+.historyPage {
+  padding: 20px;
+}
+
+.historyPage h2 {
+  margin-bottom: 20px;
+}
+
+.historyTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.historyTable th,
+.historyTable td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.historyTable th {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+
+.historyTable tr:hover {
+  background: #f9fafb;
+}
