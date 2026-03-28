@@ -100,12 +100,10 @@ export const updateFare = async (req, res) => {
 export const createAdmin = async (req, res) => {
   try{
     const adminCount = await User.countDocuments({ role: "Admin" });
-    const username = `Admin${adminCount + 1}`;
-    const email = `${username}@mymetro.com`;
+    const email = `${adminCount + 1}@mymetro.com`;
     const password = "admin123";
     const hashedPassword = await bcrypt.hash(password, 10);
     const newAdmin = await User.create({
-      username,
       email,
       password: hashedPassword,
       role: "Admin",
@@ -113,7 +111,6 @@ export const createAdmin = async (req, res) => {
     res.status(201).json({
       message: "New admin created successfully",
       admin: {
-        username: newAdmin.username,
         email: newAdmin.email,
       },
     });
