@@ -26,16 +26,22 @@ const userSchema = new mongoose.Schema(
     lastLogin: {
       type: Date,
       default: null
+    },
+    resetPasswordToken: {
+      type: String,
+      default: null
+    },
+    resetPasswordExpires: {
+      type: Date,
+      default: null
     }
   },
   { timestamps: true }
 );
 
-
 userSchema.methods.comparePassword = async function (pass) {
   return await bcrypt.compare(pass, this.password);
 };
-
 
 delete mongoose.models.User;
 

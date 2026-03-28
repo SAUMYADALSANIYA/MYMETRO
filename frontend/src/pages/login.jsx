@@ -36,6 +36,12 @@ const Login = () => {
   const [loading, setLoading]   = useState(false);
   const [showPw, setShowPw]     = useState(false);
 
+  // Forgot Password States
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotLoading, setForgotLoading] = useState(false);
+  const [forgotMessage, setForgotMessage] = useState("");
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -62,7 +68,25 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.open(`${import.meta.env.VITE_API_BASE_URL}/auth/google`, "_self");
+    window.open(`${import.meta.env.VITE_API_BASE_URL}/api/auth/google`, "_self");
+  };
+
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    setForgotLoading(true);
+    setForgotMessage("");
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/forgot-password`,
+        { email: forgotEmail }
+      );
+      setForgotMessage(response.data.message || "Request sent");
+    } catch (err) {
+      setForgotMessage("Failed to send reset link");
+    } finally {
+      setForgotLoading(false);
+    }
   };
 
   return (
@@ -131,7 +155,13 @@ const Login = () => {
               <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', margin: 0 }}>
                 <input type="checkbox" /> Keep me logged in
               </label>
-              <a href="#" style={{ color: 'var(--text-main)', textDecoration: 'none', fontWeight: 600 }}>Forgot your password?</a>
+              <a 
+                href="#" 
+                onClick={(e) => { e.preventDefault(); setIsModalOpen(true); setForgotMessage(""); setForgotEmail(""); }} 
+                style={{ color: 'var(--text-main)', textDecoration: 'none', fontWeight: 600 }}
+              >
+                Forgot your password?
+              </a>
             </div>
 
             <button type="submit" className="btn-submit" disabled={loading}>
@@ -146,53 +176,43 @@ const Login = () => {
 
         {/* Right Side: Animated Banner */}
         <div className="pane-banner">
-          
           <div className="metro-scene">
             <div className="track-line"></div>
-            
             <div className="train-wrapper train-arrive">
-              
               {/* Car 1 */}
               <div className="side-train front-car">
                 <div className="side-window cockpit"></div>
                 <div className="side-door-frame"><div className="slide-door door-left"><div className="door-glass"></div></div><div className="slide-door door-right"><div className="door-glass"></div></div></div>
                 <div className="side-window"></div>
               </div>
-
               {/* Car 2 */}
               <div className="side-train">
                 <div className="side-window"></div>
                 <div className="side-door-frame"><div className="slide-door door-left"><div className="door-glass"></div></div><div className="slide-door door-right"><div className="door-glass"></div></div></div>
                 <div className="side-window"></div>
               </div>
-
               {/* Car 3 (Middle Car - ANIMATED DOORS) */}
               <div className="side-train">
                 <div className="side-window"></div>
-                
                 <div className="side-door-frame">
                   <span className="door-interior-text">HI!</span>
                   <div className="slide-door door-left open-door-left"><div className="door-glass"></div></div>
                   <div className="slide-door door-right open-door-right"><div className="door-glass"></div></div>
                 </div>
-                
                 <div className="side-window"></div>
               </div>
-
               {/* Car 4 */}
               <div className="side-train">
                 <div className="side-window"></div>
                 <div className="side-door-frame"><div className="slide-door door-left"><div className="door-glass"></div></div><div className="slide-door door-right"><div className="door-glass"></div></div></div>
                 <div className="side-window"></div>
               </div>
-
               {/* Car 5 (Back) */}
               <div className="side-train back-car">
                 <div className="side-window"></div>
                 <div className="side-door-frame"><div className="slide-door door-left"><div className="door-glass"></div></div><div className="slide-door door-right"><div className="door-glass"></div></div></div>
                 <div className="side-window cockpit-back"></div>
               </div>
-
             </div>
           </div>
 
@@ -203,8 +223,67 @@ const Login = () => {
         </div>
 
       </div>
+
+      {/* Forgot Password Modal */}
+      {isModalOpen && (
+        <div style={modalOverlayStyle}>
+          <div style={modalContentStyle}>
+            <h3 style={{ marginBottom: '10px', color: 'var(--text-main)', fontSize: '20px' }}>Reset Password</h3>
+            <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '20px' }}>
+              Enter your email address to receive a password reset link.
+            </p>
+            
+            <form onSubmit={handleForgotPassword}>
+              <input 
+                type="email" 
+                placeholder="Email Address" 
+                value={forgotEmail}
+                onChange={(e) => setForgotEmail(e.target.value)}
+                required
+                style={modalInputStyle}
+              />
+              
+              {forgotMessage && (
+                <p style={{
+                  marginTop: '15px', padding: '10px', borderRadius: '6px', fontSize: '13px', fontWeight: '600', textAlign: 'center',
+                  backgroundColor: forgotMessage.includes('sent') ? '#ecfdf5' : '#fef2f2',
+                  color: forgotMessage.includes('sent') ? '#059669' : '#dc2626',
+                  border: `1px solid ${forgotMessage.includes('sent') ? '#a7f3d0' : '#fecaca'}`
+                }}>
+                  {forgotMessage}
+                </p>
+              )}
+
+              <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                <button type="button" onClick={() => setIsModalOpen(false)} style={modalCancelBtnStyle}>Cancel</button>
+                <button type="submit" disabled={forgotLoading} style={modalSubmitBtnStyle}>
+                  {forgotLoading ? "Sending..." : "Send Link"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
+};
+
+// Modal styles defined here so it doesn't mess with your CSS files
+const modalOverlayStyle = {
+  position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+  backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+};
+const modalContentStyle = {
+  backgroundColor: '#fff', padding: '30px', borderRadius: '16px', width: '90%', maxWidth: '420px', boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
+};
+const modalInputStyle = {
+  width: '100%', padding: '14px 16px', borderRadius: '10px', border: '1px solid #e5e7eb', fontSize: '15px', outline: 'none', boxSizing: 'border-box', backgroundColor: '#f9fafb', color: '#111'
+};
+const modalCancelBtnStyle = {
+  flex: 1, padding: '12px', border: '1px solid #e5e7eb', backgroundColor: '#fff', color: '#4b5563', borderRadius: '10px', cursor: 'pointer', fontWeight: '600', transition: 'all 0.2s'
+};
+const modalSubmitBtnStyle = {
+  flex: 1, padding: '12px', border: 'none', backgroundColor: 'var(--theme-green)', color: 'white', borderRadius: '10px', cursor: 'pointer', fontWeight: '600', transition: 'all 0.2s'
 };
 
 export default Login;

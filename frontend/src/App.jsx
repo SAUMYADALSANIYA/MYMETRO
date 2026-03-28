@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingMap from "./pages/LandingMap";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import ResetPassword from "./pages/ResetPassword"; // 👈 New Import
 
 import ManageAdmin from "./pages/admin/manage_admin";
 import AdminLayout from "./layouts/AdminLayout";
@@ -29,6 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} /> {/* 👈 New Route */}
 
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminHome />} />
@@ -47,6 +49,7 @@ function App() {
           <Route path="exit-demo" element={<ExitDemoPage />} />
           <Route path="scan/:token" element={<ScanTicketPage />} />
         </Route>
+        
         {/* Customer Route */}
         <Route path="/customer" element={<CustomerHome />} />
         <Route path="/payment" element={<PaymentPage />} />
