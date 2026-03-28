@@ -101,7 +101,7 @@
 /* ── Logout button ── */
 .customer-logout-btn {
   background: transparent;
-  color: var(--text-secondary);
+  color: red;
   border: 1px solid var(--border-mid);
   padding: 12px 14px;
   border-radius: 9px;
