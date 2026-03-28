@@ -1,18 +1,17 @@
-// src/pages/login.jsx
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import "./login.css";
+import "./Auth.css"; 
 
-const MetroIcon = () => (
+const MetroIconForm = ({ color = "white" }) => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="4" y="5" width="16" height="11" rx="3" stroke="white" strokeWidth="1.8" fill="none"/>
-    <rect x="6.5" y="8" width="4" height="3.5" rx="1" fill="white" fillOpacity="0.9"/>
-    <rect x="13.5" y="8" width="4" height="3.5" rx="1" fill="white" fillOpacity="0.9"/>
-    <circle cx="8.5" cy="18.5" r="1.8" stroke="white" strokeWidth="1.6" fill="none"/>
-    <circle cx="15.5" cy="18.5" r="1.8" stroke="white" strokeWidth="1.6" fill="none"/>
-    <line x1="3" y1="21" x2="21" y2="21" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-    <line x1="12" y1="5" x2="12" y2="16" stroke="white" strokeWidth="1.2" strokeOpacity="0.4"/>
+    <rect x="4" y="5" width="16" height="11" rx="3" stroke={color} strokeWidth="1.8" fill="none"/>
+    <rect x="6.5" y="8" width="4" height="3.5" rx="1" fill={color} fillOpacity="0.9"/>
+    <rect x="13.5" y="8" width="4" height="3.5" rx="1" fill={color} fillOpacity="0.9"/>
+    <circle cx="8.5" cy="18.5" r="1.8" stroke={color} strokeWidth="1.6" fill="none"/>
+    <circle cx="15.5" cy="18.5" r="1.8" stroke={color} strokeWidth="1.6" fill="none"/>
+    <line x1="3" y1="21" x2="21" y2="21" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
+    <line x1="12" y1="5" x2="12" y2="16" stroke={color} strokeWidth="1.2" strokeOpacity="0.4"/>
   </svg>
 );
 
@@ -67,79 +66,142 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-page">
-      {/* Brand */}
-      <div className="auth-brand">
-        <div className="auth-brand-icon">
-          <MetroIcon />
-        </div>
-        <span className="auth-brand-name">MY METRO</span>
-      </div>
-
-      {/* Card */}
-      <div className="auth-card">
-        <h2>Sign in</h2>
-        <p className="subtitle">Welcome back — enter your details below</p>
-
-        {/* Google */}
-        <button className="btn-google" type="button" onClick={handleGoogleLogin}>
-          <svg width="17" height="17" viewBox="0 0 48 48">
-            <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.6 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/>
-            <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.5 19 12 24 12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.6 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/>
-            <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.3 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8H6.3C9.7 35.7 16.3 44 24 44z"/>
-            <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.9 2.4-2.5 4.5-4.6 6l6.2 5.2C36.9 40.8 44 35.2 44 24c0-1.3-.1-2.6-.4-3.9z"/>
-          </svg>
-          Continue with Google
-        </button>
-
-        <div className="divider"><span>or</span></div>
-
-        {/* Form */}
-        <form onSubmit={handleLogin} noValidate>
-          <div className="field">
-            <label htmlFor="l-email">Email</label>
-            <div className="field-input">
-              <input
-                id="l-email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-              />
-            </div>
+    <div className="split-layout-container">
+      <div className="split-card">
+        
+        {/* Left Side: Form */}
+        <div className="pane-form">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '30px' }}>
+            <div style={{ width: '30px' }}><MetroIconForm color="var(--theme-green)" /></div>
+            <span style={{ fontSize: '20px', fontWeight: 'bold', color: 'var(--text-main)' }}>MY METRO</span>
           </div>
 
-          <div className="field">
-            <label htmlFor="l-password">Password</label>
-            <div className="field-input has-toggle">
-              <input
-                id="l-password"
-                type={showPw ? "text" : "password"}
-                placeholder="Enter your password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                required
-              />
-              <button
-                type="button"
-                className="pw-toggle"
-                onClick={() => setShowPw(v => !v)}
-                tabIndex={-1}
-              >
-                {showPw ? <EyeOffIcon /> : <EyeIcon />}
-              </button>
-            </div>
-          </div>
-
-          <button type="submit" className="btn-submit" disabled={loading}>
-            {loading ? <span className="spin" /> : "Sign In"}
+          <h2>Welcome Back</h2>
+          
+          <button className="btn-google" type="button" onClick={handleGoogleLogin}>
+            <svg width="17" height="17" viewBox="0 0 48 48">
+              <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.6 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/>
+              <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.5 19 12 24 12c3.1 0 5.8 1.1 7.9 3l5.7-5.7C34.1 6.6 29.3 4 24 4 16.3 4 9.7 8.4 6.3 14.7z"/>
+              <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.3 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8H6.3C9.7 35.7 16.3 44 24 44z"/>
+              <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.9 2.4-2.5 4.5-4.6 6l6.2 5.2C36.9 40.8 44 35.2 44 24c0-1.3-.1-2.6-.4-3.9z"/>
+            </svg>
+            Log in with Google
           </button>
-        </form>
 
-        <p className="auth-footer">
-          Don't have an account? <Link to="/register">Sign up</Link>
-        </p>
+          <div className="divider"><span>Or login with email</span></div>
+
+          <form onSubmit={handleLogin} noValidate>
+            <div className="field">
+              <label htmlFor="l-email">Email Address</label>
+              <div className="field-input">
+                <input
+                  id="l-email"
+                  type="email"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="field">
+              <label htmlFor="l-password">Password</label>
+              <div className="field-input">
+                <input
+                  id="l-password"
+                  type={showPw ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  className="pw-toggle"
+                  onClick={() => setShowPw(v => !v)}
+                  tabIndex={-1}
+                >
+                  {showPw ? <EyeOffIcon /> : <EyeIcon />}
+                </button>
+              </div>
+            </div>
+
+            <div className="row-between">
+              <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', margin: 0 }}>
+                <input type="checkbox" /> Keep me logged in
+              </label>
+              <a href="#" style={{ color: 'var(--text-main)', textDecoration: 'none', fontWeight: 600 }}>Forgot your password?</a>
+            </div>
+
+            <button type="submit" className="btn-submit" disabled={loading}>
+              {loading ? <span className="spin" /> : "Log in"}
+            </button>
+          </form>
+
+          <p className="auth-footer">
+            Don't have an account? <Link to="/register">Sign up</Link>
+          </p>
+        </div>
+
+        {/* Right Side: Animated Banner */}
+        <div className="pane-banner">
+          
+          <div className="metro-scene">
+            <div className="track-line"></div>
+            
+            <div className="train-wrapper train-arrive">
+              
+              {/* Car 1 */}
+              <div className="side-train front-car">
+                <div className="side-window cockpit"></div>
+                <div className="side-door-frame"><div className="slide-door door-left"><div className="door-glass"></div></div><div className="slide-door door-right"><div className="door-glass"></div></div></div>
+                <div className="side-window"></div>
+              </div>
+
+              {/* Car 2 */}
+              <div className="side-train">
+                <div className="side-window"></div>
+                <div className="side-door-frame"><div className="slide-door door-left"><div className="door-glass"></div></div><div className="slide-door door-right"><div className="door-glass"></div></div></div>
+                <div className="side-window"></div>
+              </div>
+
+              {/* Car 3 (Middle Car - ANIMATED DOORS) */}
+              <div className="side-train">
+                <div className="side-window"></div>
+                
+                <div className="side-door-frame">
+                  <span className="door-interior-text">HI!</span>
+                  <div className="slide-door door-left open-door-left"><div className="door-glass"></div></div>
+                  <div className="slide-door door-right open-door-right"><div className="door-glass"></div></div>
+                </div>
+                
+                <div className="side-window"></div>
+              </div>
+
+              {/* Car 4 */}
+              <div className="side-train">
+                <div className="side-window"></div>
+                <div className="side-door-frame"><div className="slide-door door-left"><div className="door-glass"></div></div><div className="slide-door door-right"><div className="door-glass"></div></div></div>
+                <div className="side-window"></div>
+              </div>
+
+              {/* Car 5 (Back) */}
+              <div className="side-train back-car">
+                <div className="side-window"></div>
+                <div className="side-door-frame"><div className="slide-door door-left"><div className="door-glass"></div></div><div className="slide-door door-right"><div className="door-glass"></div></div></div>
+                <div className="side-window cockpit-back"></div>
+              </div>
+
+            </div>
+          </div>
+
+          <h2>Welcome Back!</h2>
+          <p>
+            The doors are open. Log in to access your dashboard, track your latest updates, and manage your account.
+          </p>
+        </div>
+
       </div>
     </div>
   );
