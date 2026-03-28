@@ -1,77 +1,80 @@
+:root {
+  --theme-green: #2e8b57;
+  --theme-green-hover: #1e5c3a;
+  --bg-color: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --border-light: #e5e7eb;
+}
+
 .manage-fare-container {
   min-height: calc(100vh - 80px); 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 60px 5%;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  justify-content: flex-start;
+  padding: 40px 5%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: var(--text-main);
+  animation: fadeIn 0.4s ease-in-out;
 }
 
 .manage-fare-title {
-  font-size: clamp(28px, 3vw, 36px);
+  font-size: 32px;
   font-weight: 800;
   letter-spacing: -0.5px;
-  margin-bottom: 35px;
+  margin-bottom: 40px;
   text-align: center;
 }
 
 .fare-card {
-  background-color: var(--bg-card);
-  padding: 60px 8%;  
+  background-color: var(--card-bg);
+  padding: 40px 50px;  
   border-radius: 20px;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   width: 100%;
-  max-width: 720px;
-  min-width: 300px;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  transition: var(--transition);
+  max-width: 600px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .fare-group {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 22px 0;
-  border-bottom: 1px solid #f3f4f6;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .fare-group:last-of-type {
   border-bottom: none;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 }
 
 .fare-group label {
-  font-size: clamp(14px, 1.2vw, 16px);
+  font-size: 16px;
   font-weight: 600;
   color: var(--text-main);
 }
 
 .fare-group input {
-  width: 35%;
-  min-width: 100px;
-  max-width: 200px;
-  padding: 12px 14px;
+  width: 40%;
+  padding: 12px 16px;
   border-radius: 10px;
-  border: 1px solid var(--border-color);
-  font-size: 15px;
-  font-weight: 500;
+  border: 1px solid var(--border-light);
+  font-size: 16px;
+  font-weight: 600;
   text-align: right;
-  background-color: #ffffff;
-  color: #111;
+  background-color: #f9fafb;
+  color: var(--theme-green);
   outline: none;
-  transition: var(--transition);
+  transition: all 0.2s ease;
 }
 
-
-
-
 .fare-group input:focus {
-  outline: none;
-  border-color: var(--primary-dark);
+  border-color: var(--theme-green);
   background-color: #ffffff;
-  box-shadow: 0 0 0 4px var(--focus-ring);
+  box-shadow: 0 0 0 4px rgba(46, 139, 87, 0.1);
 }
 
 .fare-group input::-webkit-outer-spin-button,
@@ -82,20 +85,22 @@
 
 .update-btn {
   width: 100%;
-  padding: 18px;
-  background-color: var(--primary-dark);
+  padding: 16px;
+  background-color: var(--theme-green);
   color: white;
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  font-size: 17px;
-  font-weight: 600;
-  transition: var(--transition);
+  font-size: 16px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(46, 139, 87, 0.2);
 }
 
 .update-btn:hover:not(:disabled) {
-  background-color: var(--primary-hover);
+  background-color: var(--theme-green-hover);
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(46, 139, 87, 0.3);
 }
 
 .update-btn:active:not(:disabled) {
@@ -103,24 +108,13 @@
 }
 
 .update-btn:disabled {
-  background-color: var(--disabled);
-  opacity: 0.6;
+  background-color: #cbd5e1;
+  box-shadow: none;
   cursor: not-allowed;
 }
 
 @media (max-width: 768px) {
   .fare-card {
     padding: 30px 20px;
-  }
-
-  .fare-group {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .fare-group input {
-    width: 100%;
-    max-width: 100%;
   }
 }

@@ -5,8 +5,8 @@ import "./AdminLayout.css";
 const AdminLayout = () => {
   const navigate = useNavigate();
   const [lastLogin, setLastLogin] = useState(null);
+  
   useEffect(() => {
-    
     const storedLogin = localStorage.getItem("lastLogin");
     setLastLogin(storedLogin);
   }, []);
@@ -21,7 +21,7 @@ const AdminLayout = () => {
       
       {/* Sidebar */}
       <div className="sidebar">
-        <h2>MyMetro Admin</h2>
+        <h2><span>MyMetro</span> Admin</h2>
 
         <nav className="nav-links">
           <NavLink 

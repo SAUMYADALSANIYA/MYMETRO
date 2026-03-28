@@ -1,112 +1,199 @@
+:root {
+  --admin-bg: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --border-light: #e5e7eb;
+  
+  /* Theming Colors */
+  --green-soft: #dcfce7;
+  --green-icon: #2e8b57;
+  --green-badge-bg: #dcfce7;
+  --green-badge-text: #166534;
+}
+
 .dashboard-container {
-  padding: 50px 40px;
+  padding: 10px 40px 50px 40px;
   max-width: 1200px;
   margin: 0 auto;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: var(--text-main);
 }
 
-.dashboard-title {
-  font-size: 34px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  margin-bottom: 40px;
-  color: var(--primary-accent);
+/* Header */
+.dashboard-header {
   text-align: center;
+  margin-bottom: 40px;
 }
 
+.dashboard-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+
+.dashboard-subtitle {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Stats Row - Centered */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .stat-card {
-  background: var(--bg-card);
-  padding: 28px;
+  background: var(--card-bg);
+  padding: 30px;
   border-radius: 16px;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
 }
 
-.stat-card h3 {
-  font-size: 14px;
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* Custom Icon Colors - Both green now! */
+.customer-icon {
+  background-color: var(--green-soft);
+  color: var(--green-icon);
+}
+
+.ticket-icon {
+  background-color: var(--green-soft);
+  color: var(--green-icon);
+}
+
+.stat-info h3 {
+  font-size: 13px;
   color: var(--text-muted);
-  font-weight: 600;
-  margin-bottom: 12px;
+  font-weight: 700;
+  margin: 0 0 6px 0;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.stat-card p {
-  font-size: 32px;
+.stat-info p {
+  font-size: 36px;
   font-weight: 800;
-  color: var(--primary-accent);
+  color: var(--text-main);
+  margin: 0;
+  line-height: 1;
 }
 
+/* Bottom Row - Centered Fare Card */
+.dashboard-bottom-row {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Common Card Styling */
 .card {
-  background-color: var(--bg-card);
-  padding: 32px;
+  background-color: var(--card-bg);
   border-radius: 16px;
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 28px;
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
 }
 
-.card:hover {
-  box-shadow: var(--shadow-md);
+/* Fare Slabs Card */
+.fare-card {
+  padding: 30px;
 }
 
-.card h2 {
-  margin-bottom: 26px;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--primary-accent);
-}
-
-.fare-list div {
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border-light);
-  font-size: 15px;
+.card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #444;
-  transition: var(--transition);
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border-light);
 }
 
-.fare-list div:last-child {
-  border-bottom: none;
+.card-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
 }
 
-.fare-list div:hover {
-  background-color: #fafafa;
-  padding-left: 8px;
-  padding-right: 8px;
-  margin-left: -8px;
-  margin-right: -8px;
-  border-radius: 6px;
+.badge-active {
+  background-color: var(--green-badge-bg);
+  color: var(--green-badge-text);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
 }
 
-.fare-price {
-  font-weight: 700;
-  color: var(--primary-accent);
+/* Fare List Styling */
+.fare-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.success {
-  background-color: var(--success-bg);
-  color: var(--success-text);
+.fare-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9fafb;
+  padding: 16px 20px;
+  border-radius: 10px;
+  transition: background-color 0.2s;
+}
+
+.fare-item:hover {
+  background-color: #f3f4f6;
+}
+
+.fare-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.fare-value {
+  background-color: var(--green-soft);
+  color: var(--green-icon);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 14px;
 }
 
 .loading-text {
   color: var(--text-muted);
   font-style: italic;
+  text-align: center;
+  padding: 20px 0;
 }
