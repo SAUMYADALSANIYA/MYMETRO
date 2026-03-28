@@ -15,6 +15,9 @@ import paymentRoutes from "./routes/paymentRoutes.js";
 import gateRoutes from "./routes/gateRoutes.js";
 import publicRoutes from "./routes/publicRoutes.js"
 import session from "express-session";
+import ticketRoutes from "./routes/ticketRouts.js";
+
+
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 
@@ -83,6 +86,7 @@ app.use("/api/customer", searchRoutes);
 app.use("/api/customer", customerMetroRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/gate", gateRoutes);
+app.use("/api/tickets", ticketRoutes);
 
 
 app.get("/auth/google",

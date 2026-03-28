@@ -73,3 +73,14 @@ export async function validateExit(qrToken, exitStation) {
   if (!res.ok) throw json;
   return json;
 }
+
+export async function getTicketHistory() {
+  const res = await fetch(`${API}/api/tickets/history`, {
+    headers: authHeaders()
+  });
+
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.message || "Failed to load history");
+
+  return json;
+}
