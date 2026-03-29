@@ -4,7 +4,7 @@ import MetroMap from "../components/MetroMap";
 import SelectionPanel from "../components/SelectionPanel";
 import "./LandingMap.css";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:5001";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
 
 function mapMetroResponse(metros) {
   return metros.map((m) => ({
