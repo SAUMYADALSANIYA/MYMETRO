@@ -117,7 +117,9 @@ export const processPayment = async (req, res) => {
       qrToken,
       scanUrl,
       qrCodeDataUrl,
-      status: "ACTIVE"
+      status: "ACTIVE",
+      first_scan_at: null,
+      second_scan_at: null
     });
 
     return res.status(200).json({
@@ -147,7 +149,7 @@ export const processExtraFarePayment = async (req, res) => {
       cvv
     } = req.body;
 
-    if (!parentTicketId || !routeId || !routeName || !source || !destination || !cardNumber || !cardHolder || !cvv) {
+    if(!parentTicketId || !routeId || !routeName || !source || !destination || !cardNumber || !cardHolder || !cvv) {
       return res.status(400).json({
         message: "All extra fare fields are required"
       });
