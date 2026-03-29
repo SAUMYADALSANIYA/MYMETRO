@@ -1,6 +1,6 @@
 import { MapContainer, TileLayer, Polyline, CircleMarker, Popup } from "react-leaflet";
 
-const ahmedabadCenter = [23.0225, 72.5714];
+const ahmedabadCenter = [23.0500, 72.5880];
 
 export default function CustomerMetroMap({
   routes,
@@ -13,7 +13,7 @@ export default function CustomerMetroMap({
   return (
     <MapContainer
       center={ahmedabadCenter}
-      zoom={12}
+      zoom={12.45}
       // Lock all map movement to make it purely a display canvas
       scrollWheelZoom={false}
       dragging={false}
