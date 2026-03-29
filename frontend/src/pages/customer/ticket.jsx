@@ -139,13 +139,13 @@ export default function TicketPage() {
         {/* Action Buttons */}
         <div className="ticket-actions no-print">
           <button
-            className="btn-scan"
-            onClick={() => navigate("/customer/scan/" + ticket.qrToken)}
+            className="btn-history"
+            onClick={() => navigate("/customer/history")}
           >
             <svg viewBox="0 0 24 24" fill="none" width="18" height="18" style={{marginRight: '8px'}}>
               <path d="M4 4H10V10H4V4ZM14 4H20V10H14V4ZM4 14H10V20H4V14ZM14 14H17V17H14V14ZM17 17H20V20H17V17Z" fill="currentColor"/>
             </svg>
-            Open Scanner
+            View Order History
           </button>
 
           <button className="btn-pdf" onClick={downloadPDF}>

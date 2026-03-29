@@ -261,7 +261,7 @@
   margin-top: 24px;
 }
 
-.btn-scan, .btn-pdf {
+.btn-history, .btn-pdf {
   flex: 1;
   display: flex;
   align-items: center;
@@ -275,12 +275,12 @@
   border: none;
 }
 
-.btn-scan {
-  background: #111827;
+.btn-history {
+  background: #3c8754;
   color: white;
 }
 
-.btn-scan:hover { background: #000000; transform: translateY(-2px); }
+.btn-history:hover { background: #337448; transform: translateY(-2px); }
 
 .btn-pdf {
   background: white;
