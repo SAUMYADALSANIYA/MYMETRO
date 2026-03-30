@@ -81,9 +81,8 @@ export const forgotPassword = async (req, res) => {
 
     await user.save();
 
-    const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
-    const message = `You requested a password reset. Please make a PUT request to: \n\n ${resetUrl}`;
-
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    const message = `You requested a password reset. Click the link below to reset your password:\n\n${resetUrl}\n\nThis link expires in 1 hour. If you did not request this, please ignore this email.`;
     try {
       await sendEmail({
         to: user.email,
@@ -97,7 +96,8 @@ export const forgotPassword = async (req, res) => {
       await user.save();
       return res.status(500).json({ message: "Email could not be sent" });
     }
-  } catch (error) {
+  }
+  catch (error) {
     res.status(500).json({ message: "Server Error" });
   }
 };
@@ -126,7 +126,8 @@ export const resetPassword = async (req, res) => {
     await user.save();
 
     res.status(200).json({ message: "Password reset successful" });
-  } catch (error) {
+  }
+  catch (error) {
     res.status(500).json({ message: "Server Error" });
   }
 };
