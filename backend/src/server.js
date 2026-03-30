@@ -43,7 +43,7 @@ app.use(passport.session());
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:5001/auth/google/callback",
+  callbackURL: "https://mymetro.onrender.com/auth/google/callback",
   passReqToCallback: true
 },
 async (req, accessToken, refreshToken, profile, done) => {
@@ -105,7 +105,7 @@ app.get("/auth/google/callback",
       { expiresIn: "1d" }
     );
 
-    res.redirect(`http://localhost:5173/oauth-success?token=${token}`);
+    res.redirect(`https://poetic-cendol-d3a4ba.netlify.app/oauth-success?token=${token}`);
   }
 );
 app.get("/", (req, res) => {

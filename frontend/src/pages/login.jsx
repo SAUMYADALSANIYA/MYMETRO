@@ -68,7 +68,7 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.open(`${import.meta.env.VITE_API_BASE_URL}/api/auth/google`, "_self");
+    window.open(`${import.meta.env.VITE_API_BASE_URL}/auth/google`, "_self");
   };
 
   const handleForgotPassword = async (e) => {
