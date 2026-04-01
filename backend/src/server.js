@@ -16,7 +16,11 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 
 import jwt from "jsonwebtoken";
 dotenv.config();
+<<<<<<< Updated upstream
 connectDB();
+=======
+const app = require('./app'); 
+>>>>>>> Stashed changes
 
 const app = express();
 
