@@ -331,3 +331,116 @@ body {
   color: var(--text-secondary);
   margin-bottom: 20px;
 }
+
+/* Tablet */
+@media (max-width: 768px) {
+  .paymentPage {
+    padding: 30px 15px 50px;
+  }
+
+  .paymentPage > h1 {
+    font-size: 12px;
+    margin-bottom: 28px;
+  }
+
+  .paymentCard {
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+
+  .row {
+    font-size: 13px;
+  }
+
+  .row > span:last-child {
+    font-size: 13px;
+  }
+
+  .row.fare > span:last-child {
+    font-size: 20px;
+  }
+
+  .paymentCard input {
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+
+  .payBtn {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .paymentPage {
+    padding: 20px 12px 40px;
+  }
+
+  .paymentPage > h1 {
+    font-size: 11px;
+    gap: 6px;
+  }
+
+  .paymentPage > h1::before,
+  .paymentPage > h1::after {
+    width: 20px;
+  }
+
+  .paymentCard {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .tripSummary {
+    padding: 14px 14px;
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 12px;
+  }
+
+  .row > span:first-child {
+    font-size: 11px;
+  }
+
+  .row > span:last-child {
+    font-size: 13px;
+  }
+
+  .row.fare > span:last-child {
+    font-size: 18px;
+  }
+
+  .sectionLabel {
+    font-size: 10px;
+  }
+
+  .paymentCard input {
+    font-size: 13px;
+    padding: 11px 12px;
+  }
+
+  .payBtn {
+    font-size: 13px;
+    padding: 11px;
+  }
+
+  .successMsg,
+  .failMsg {
+    font-size: 13px;
+    padding: 14px;
+  }
+
+  .backBtn {
+    font-size: 12px;
+    padding: 8px 18px;
+  }
+
+  .loader {
+    font-size: 12px;
+  }
+}

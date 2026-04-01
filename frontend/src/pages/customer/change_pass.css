@@ -186,3 +186,76 @@
     transform: rotate(360deg);
   }
 }
+
+/* Tablet */
+@media (max-width: 768px) {
+  .customer-change-password-page {
+    padding: 30px 15px;
+  }
+
+  .customer-change-password-card {
+    padding: 30px 25px;
+  }
+
+  .card-header h1 {
+    font-size: 24px;
+  }
+
+  .card-header p {
+    font-size: 13px;
+  }
+
+  .input-wrapper input {
+    padding: 14px 40px 14px 14px;
+    font-size: 14px;
+  }
+
+  .customer-pass-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .customer-change-password-page {
+    padding: 20px 10px;
+  }
+
+  .customer-change-password-card {
+    padding: 24px 18px;
+    border-radius: 16px;
+  }
+
+  .card-header h1 {
+    font-size: 20px;
+  }
+
+  .card-header p {
+    font-size: 12px;
+  }
+
+  .customer-pass-field label {
+    font-size: 12px;
+  }
+
+  .input-wrapper input {
+    padding: 12px 38px 12px 12px;
+    font-size: 13px;
+  }
+
+  .eye-toggle svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .customer-pass-btn {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .customer-pass-message {
+    font-size: 13px;
+    padding: 10px;
+  }
+}

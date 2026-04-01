@@ -113,8 +113,54 @@
   cursor: not-allowed;
 }
 
+/* Tablet Improvements */
 @media (max-width: 768px) {
+  .manage-fare-container {
+    padding: 30px 20px;
+  }
+
+  .manage-fare-title {
+    font-size: 26px;
+    margin-bottom: 30px;
+  }
+
   .fare-card {
     padding: 30px 20px;
+  }
+
+  .fare-group label {
+    font-size: 15px;
+  }
+
+  .fare-group input {
+    font-size: 15px;
+    padding: 10px 12px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .manage-fare-container {
+    padding: 20px 12px;
+  }
+
+  .manage-fare-title {
+    font-size: 22px;
+  }
+
+  .fare-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .fare-group input {
+    width: 100%;
+    text-align: left;
+  }
+
+  .update-btn {
+    padding: 14px;
+    font-size: 14px;
   }
 }

@@ -22,3 +22,62 @@
 .modal-actions { display: flex; justify-content: space-between; gap: 10px; }
 .btn-cancel { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; background: #e5e7eb; color: #333; }
 .btn-submit { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; background: #2e8b57; color: white; }
+
+/* Tablet */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    padding: 25px;
+  }
+
+  .modal-input {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .modal-actions {
+    gap: 8px;
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .forgot-password-link {
+    font-size: 12px;
+    margin-top: -6px;
+    margin-bottom: 15px;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .modal-input {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  /* Stack buttons vertically */
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .btn-cancel,
+  .btn-submit {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .modal-msg {
+    font-size: 13px;
+  }
+}

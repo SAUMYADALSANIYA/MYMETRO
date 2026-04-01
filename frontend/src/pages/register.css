@@ -197,3 +197,93 @@
    @media (max-width: 440px) {
      .auth-card { padding: 28px 20px; }
    }
+
+   /* Tablet */
+@media (max-width: 768px) {
+  .auth-page {
+    padding: 20px;
+  }
+
+  .auth-card {
+    padding: 30px 24px;
+    max-width: 100%;
+  }
+
+  .auth-card h2 {
+    font-size: 20px;
+  }
+
+  .auth-card .subtitle {
+    font-size: 13px;
+  }
+
+  .field-input input {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  .btn-submit {
+    font-size: 14px;
+    padding: 11px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 16px;
+  }
+
+  .auth-brand {
+    margin-bottom: 20px;
+  }
+
+  .auth-brand-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .auth-brand-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .auth-brand-name {
+    font-size: 16px;
+  }
+
+  .auth-card {
+    padding: 24px 18px;
+    border-radius: 14px;
+  }
+
+  .auth-card h2 {
+    font-size: 18px;
+  }
+
+  .field label {
+    font-size: 12px;
+  }
+
+  .field-input input {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .strength-label {
+    font-size: 10px;
+  }
+
+  .btn-submit {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .auth-footer {
+    font-size: 12px;
+  }
+
+  .terms {
+    font-size: 11px;
+  }
+}

@@ -467,3 +467,100 @@ body {
     transform: translateY(-130px); /* Slides the text up into the empty space */
   }
 }
+
+/* Tablet */
+@media (max-width: 900px) {
+  .split-card {
+    flex-direction: column;
+    max-width: 600px;
+    min-height: auto;
+  }
+
+  .pane-form,
+  .pane-banner {
+    padding: 30px 25px;
+  }
+
+  .pane-form h2 {
+    font-size: 26px;
+  }
+
+  .pane-banner h2 {
+    font-size: 22px;
+  }
+
+  .pane-banner p {
+    font-size: 14px;
+  }
+
+  /* Scale train */
+  .train-wrapper {
+    transform: scale(0.7);
+    margin-left: -550px;
+  }
+
+  .metro-scene {
+    height: 180px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .split-layout-container {
+    padding: 10px;
+  }
+
+  .split-card {
+    border-radius: 12px;
+  }
+
+  .pane-form,
+  .pane-banner {
+    padding: 20px 15px;
+  }
+
+  .pane-form h2 {
+    font-size: 22px;
+  }
+
+  .pane-banner h2 {
+    font-size: 18px;
+  }
+
+  .pane-banner p {
+    font-size: 13px;
+    padding: 0 10px;
+  }
+
+  .field-input input {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .btn-submit {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .btn-google {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  /* Further scale down train animation */
+  .train-wrapper {
+    transform: scale(0.5);
+    margin-left: -400px;
+  }
+
+  .metro-scene {
+    height: 140px;
+  }
+
+  /* Reduce text animation shift */
+  @keyframes centerText {
+    to {
+      transform: translateY(-80px);
+    }
+  }
+}

@@ -129,3 +129,80 @@
 .admin-table tr:last-child td {
   border-bottom: none;
 }
+
+/* Tablet */
+@media (max-width: 768px) {
+  .create-admin-container {
+    padding: 30px 15px;
+  }
+
+  .create-admin-title {
+    font-size: 26px;
+    margin-bottom: 30px;
+  }
+
+  .create-admin-card,
+  .admin-list-card {
+    padding: 25px;
+    border-radius: 16px;
+  }
+
+  .create-admin-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .create-admin-container {
+    padding: 20px 10px;
+  }
+
+  .create-admin-title {
+    font-size: 22px;
+  }
+
+  .create-admin-card {
+    max-width: 100%;
+  }
+
+  .admin-list-card h3 {
+    font-size: 18px;
+  }
+
+  /* Make table scrollable */
+  .admin-list-card {
+    overflow-x: auto;
+  }
+
+  .admin-table {
+    min-width: 500px;
+  }
+
+  .admin-table th {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .admin-table td {
+    font-size: 13px;
+    padding: 12px;
+  }
+
+  .create-admin-btn {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .success, .error {
+    font-size: 13px;
+    padding: 12px;
+  }
+}

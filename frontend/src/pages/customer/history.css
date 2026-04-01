@@ -406,6 +406,126 @@
   font-size: 1.1rem;
 }
 
+/* Tablet */
+@media (max-width: 900px) {
+  .historyPage {
+    padding: 24px 20px;
+  }
+
+  .historyTitle {
+    font-size: 1.5rem;
+  }
+
+  .statPill {
+    padding: 8px 14px;
+    min-width: 70px;
+  }
+
+  .statNum {
+    font-size: 1rem;
+  }
+
+  .ticketLeft {
+    padding: 16px 18px;
+    gap: 12px;
+  }
+
+  .ticketRight {
+    padding: 14px 16px;
+    min-width: 130px;
+  }
+
+  .fareAmount {
+    font-size: 1.1rem;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .historyPage {
+    padding: 16px 12px;
+  }
+
+  .historyTitle {
+    font-size: 1.3rem;
+  }
+
+  .historySubtitle {
+    font-size: 0.75rem;
+  }
+
+  .statsRow {
+    gap: 6px;
+  }
+
+  .statPill {
+    padding: 6px 10px;
+    min-width: 60px;
+  }
+
+  .statNum {
+    font-size: 0.9rem;
+  }
+
+  .statLabel {
+    font-size: 0.6rem;
+  }
+
+  .filterTabs {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .filterTab {
+    font-size: 0.7rem;
+    padding: 5px 12px;
+  }
+
+  .ticketLeft {
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .stationName {
+    font-size: 0.85rem;
+  }
+
+  .ticketIndex {
+    font-size: 0.65rem;
+    padding: 3px 6px;
+  }
+
+  .ticketRight {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .fareAmount {
+    font-size: 1rem;
+  }
+
+  .dateValue {
+    font-size: 0.7rem;
+  }
+
+  .timeValue {
+    font-size: 0.65rem;
+  }
+
+  .statusBadge {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+  }
+
+  .emptyState {
+    padding: 40px 15px;
+  }
+
+  .loadingState {
+    padding: 60px 15px;
+  }
+}
+
 /* ─── Responsive ────────────────────────────────────── */
 @media (max-width: 640px) {
   .historyPage {

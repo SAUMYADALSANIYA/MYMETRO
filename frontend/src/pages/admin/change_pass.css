@@ -133,3 +133,41 @@
   color: #dc2626;
   border: 1px solid #fecaca;
 }
+
+@media (max-width: 640px) {
+  .change-password-wrapper {
+    padding: 20px;
+  }
+
+  .change-password-title {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .change-password-container {
+    padding: 25px 20px;
+    border-radius: 16px;
+    max-width: 100%;
+  }
+
+  .change-password-container input {
+    padding: 14px 60px 14px 14px;
+    font-size: 14px;
+  }
+
+  .toggle-password {
+    right: 12px;
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+
+  .change-password-container button {
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  .message {
+    font-size: 13px;
+    padding: 12px;
+  }
+}

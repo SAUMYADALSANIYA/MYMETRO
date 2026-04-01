@@ -197,3 +197,95 @@
   text-align: center;
   padding: 20px 0;
 }
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 10px 20px 40px 20px;
+  }
+
+  .dashboard-title {
+    font-size: 26px;
+  }
+
+  .dashboard-subtitle {
+    font-size: 14px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    max-width: 100%;
+  }
+
+  .stat-card {
+    padding: 22px;
+    gap: 16px;
+  }
+
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .stat-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .stat-info p {
+    font-size: 28px;
+  }
+
+  .dashboard-bottom-row {
+    max-width: 100%;
+  }
+
+  .fare-card {
+    padding: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 10px 15px 30px 15px;
+  }
+
+  .dashboard-title {
+    font-size: 22px;
+  }
+
+  .stat-card {
+    flex-direction: row;
+    padding: 18px;
+  }
+
+  .stat-info h3 {
+    font-size: 11px;
+  }
+
+  .stat-info p {
+    font-size: 24px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .card-header h2 {
+    font-size: 16px;
+  }
+
+  .fare-item {
+    padding: 14px 16px;
+  }
+
+  .fare-label {
+    font-size: 13px;
+  }
+
+  .fare-value {
+    font-size: 13px;
+    padding: 5px 10px;
+  }
+}
