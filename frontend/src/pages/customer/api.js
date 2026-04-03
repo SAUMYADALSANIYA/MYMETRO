@@ -63,15 +63,16 @@ export async function payExtraFare(paymentData) {
   return json;
 }
 
-export async function validateExit(qrToken, exitStation) {
-  const res = await fetch(`${API}/api/gate/validate-exit`, {
+export async function scanTicket(qrToken, station) {
+  const res = await fetch(`${API}/api/gate/scan`, {
     method: "POST",
-    headers: authHeaders(),
-    body: JSON.stringify({ qrToken, exitStation })
+    headers: {
+      "Content-Type": "application/json"
+    }, 
+    body: JSON.stringify({ qrToken, station })
   });
-  const json = await res.json();
-  if (!res.ok) throw json;
-  return json;
+
+  return await res.json();
 }
 
 export async function getTicketHistory() {

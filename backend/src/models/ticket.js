@@ -74,15 +74,13 @@ const ticketSchema = new mongoose.Schema(
     },
     
     first_scan_at: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Station",
-      default: null
-    },
-    second_scan_at: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Station",
-      default: null
-    }
+  type: String, 
+  default: null
+},
+second_scan_at: {
+  type: String,
+  default: null
+}
   },
   { timestamps: true }
 );

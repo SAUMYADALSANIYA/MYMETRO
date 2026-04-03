@@ -18,84 +18,69 @@ async function getFareDoc() {
   return fare;
 }
 
-export const validateExit = async (req, res) => {
+export const scanTicket = async (req, res) => {
   try {
-    const { qrToken, exitStation } = req.body;
+    const { qrToken, station } = req.body;
 
-    if (!qrToken || !exitStation) {
+    if (!qrToken || !station) {
       return res.status(400).json({
-        message: "qrToken and exitStation are required"
+        success: false,
+        message: "qrToken and station required"
       });
     }
 
     const ticket = await Ticket.findOne({ qrToken });
+
     if (!ticket) {
       return res.status(404).json({
-        valid: false,
-        message: "Ticket not found"
+        success: false,
+        message: "Invalid Ticket"
       });
     }
 
+    // ❌ Already used
     if (ticket.status === "USED") {
-      return res.status(400).json({
-        valid: false,
-        message: "This QR has already been used"
+      return res.json({
+        success: false,
+        message: "Ticket already used"
       });
     }
 
-    const route = await Route.findById(ticket.routeId);
-    if (!route) {
-      return res.status(404).json({
-        valid: false,
-        message: "Route not found"
+    // 🟢 ENTRY SCAN
+    if (!ticket.first_scan_at) {
+      ticket.first_scan_at = station;
+
+      await ticket.save();
+
+      return res.json({
+        success: true,
+        type: "ENTRY",
+        message: `Entry allowed at ${station}`
       });
     }
 
-    const bookedDestIdx = route.stations.indexOf(ticket.destination);
-    const exitIdx = route.stations.indexOf(exitStation);
+    // 🔵 EXIT SCAN
+    if (!ticket.second_scan_at) {
+      ticket.second_scan_at = station;
+      ticket.status = "USED";
+      ticket.usedAt = new Date();
 
-    if (exitIdx === -1) {
-      return res.status(400).json({
-        valid: false,
-        message: "Exit station not on this route"
+      await ticket.save();
+
+      return res.json({
+        success: true,
+        type: "EXIT",
+        message: `Exit allowed at ${station}`
       });
     }
 
-    if (exitIdx > bookedDestIdx) {
-      const fareDoc = await getFareDoc();
-      const extraStops = exitIdx - bookedDestIdx;
-      const extraFare = computeFareByStops(extraStops, fareDoc);
-
-      return res.status(409).json({
-        valid: false,
-        extraRequired: true,
-        message: `Extra fare required from ${ticket.destination} to ${exitStation}`,
-        extraTrip: {
-          parentTicketId: ticket._id,
-          routeId: route._id,
-          routeName: route.routeName,
-          source: ticket.destination,
-          destination: exitStation,
-          stops: extraStops,
-          fare: extraFare
-        }
-      });
-    }
-
-    ticket.status = "USED";
-    ticket.usedAt = new Date();
-    await ticket.save();
-
-    return res.status(200).json({
-      valid: true,
-      message: `Exit allowed at ${exitStation}`,
-      ticket
+    return res.json({
+      success: false,
+      message: "Invalid scan attempt"
     });
-  } catch (error) {
-    console.error("validateExit error:", error);
-    return res.status(500).json({
-      valid: false,
-      message: "Server error"
-    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
