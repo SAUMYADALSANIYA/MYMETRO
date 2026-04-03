@@ -4,9 +4,10 @@ import jwt from "jsonwebtoken";
 
 export const loginStation = async (req, res) => {
   try {
-    const { stationCode, password } = req.body;
+    const { qrToken } = req.body;
+    const station = req.station.stationCode;
 
-    const station = await Station.findOne({ stationCode });
+    
 
     if (!station) {
       return res.status(404).json({ message: "Station not found" });
