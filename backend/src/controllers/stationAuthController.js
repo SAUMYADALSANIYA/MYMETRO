@@ -1,5 +1,5 @@
-import Station from "../models/station.js";
 import bcrypt from "bcrypt";
+import Station from "../models/station.js";
 import jwt from "jsonwebtoken";
 
 export const loginStation = async (req, res) => {
@@ -12,20 +12,27 @@ export const loginStation = async (req, res) => {
       return res.status(404).json({ message: "Station not found" });
     }
 
-    const match = await bcrypt.compare(password, station.password);
+    // ✅ CORRECT PASSWORD CHECK
+    const isMatch = await bcrypt.compare(password, station.password);
 
-    if (!match) {
-      return res.status(401).json({ message: "Wrong password" });
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
+    // ✅ CREATE TOKEN
     const token = jwt.sign(
-      { stationId: station._id, name: station.name },
-      process.env.JWT_SECRET
+      { stationId: station._id, stationCode: station.stationCode },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
     );
 
-    res.json({ token, station });
+    res.json({
+      success: true,
+      token
+    });
 
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 };
