@@ -14,6 +14,9 @@ export const loginStation = async (req, res) => {
 
     // ✅ CORRECT PASSWORD CHECK
     const isMatch = await bcrypt.compare(password, station.password);
+    console.log("Entered password:", password);
+console.log("Hash from DB:", station.password);
+console.log("Password match:", isMatch);
 
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
