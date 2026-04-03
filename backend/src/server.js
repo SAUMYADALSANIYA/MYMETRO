@@ -103,6 +103,10 @@ app.use("/api/gate", gateRoutes);
 app.use("/api/tickets", ticketRoutes);
 app.use("/api/station", stationAuthRoutes);
 
+app.get("/test-gate", (req, res) => {
+  res.send("Gate route working");
+});
+
 app.get("/auth/google",
   passport.authenticate("google", { 
     scope: ["profile", "email"],
