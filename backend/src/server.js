@@ -24,13 +24,19 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import jwt from "jsonwebtoken";
 
 import { seedMetroIfEmpty } from "./seed/seedMetroIfEmpty.js";
+import stationAuthRoutes from "./routes/stationAuthRoutes.js";
+
+
 
 dotenv.config();
 
 const app = express();
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: [
+    "http://localhost:5173",
+    "https://poetic-cendol-d3a4ba.netlify.app"
+  ],
   credentials: true
 }));
 
@@ -91,7 +97,7 @@ app.use("/api/customer", customerMetroRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/gate", gateRoutes);
 app.use("/api/tickets", ticketRoutes);
-
+app.use("/api/station", stationAuthRoutes);
 
 app.get("/auth/google",
   passport.authenticate("google", { 

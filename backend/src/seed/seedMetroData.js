@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 
 import Route from "../models/route.js";
 import Schedule from "../models/schedule.js";
+import Station from "../models/station.js";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 
@@ -14,6 +16,7 @@ async function run() {
 
   await Route.deleteMany({});
   await Schedule.deleteMany({});
+  await Station.deleteMany({});
 
   const routes = [
     {
@@ -68,29 +71,39 @@ async function run() {
       schedule: { startTime: "06:00", endTime: "22:00", frequencyMins: 10 }
     }
   ];
+  const hashedPassword = await bcrypt.hash("1234", 10);
 
-  for (const r of routes) {
-    const route = await Route.create({
-      routeName:         r.routeName,
-      color:             r.color,
-      fareRange:         r.fareRange,
-      estimatedDuration: r.estimatedDuration,
-      stations:          r.stations
+for (const r of routes) {
+  const route = await Route.create({
+    routeName:         r.routeName,
+    color:             r.color,
+    fareRange:         r.fareRange,
+    estimatedDuration: r.estimatedDuration,
+    stations:          r.stations
+  });
+
+  await Schedule.create({
+    routeId:       route._id,
+    startTime:     r.schedule.startTime,
+    endTime:       r.schedule.endTime,
+    frequencyMins: r.schedule.frequencyMins
+  });
+
+  // 🔥 ADD THIS BLOCK
+  for (let i = 0; i < r.stations.length; i++) {
+    const station = r.stations[i];
+
+    await Station.create({
+      name: station.name,
+      line: r.routeName,
+      order: i,
+      stationCode: (station.name.replace(/\s/g, "").substring(0,4) + i).toUpperCase(),
+      password: hashedPassword
     });
-
-    await Schedule.create({
-      routeId:       route._id,
-      startTime:     r.schedule.startTime,
-      endTime:       r.schedule.endTime,
-      frequencyMins: r.schedule.frequencyMins
-    });
-
-    console.log("Seeded:", r.routeName);
   }
 
-  await mongoose.disconnect();
-
-  console.log("Seeding completed");
+  console.log("Seeded:", r.routeName);
+}
 }
 
 run();
