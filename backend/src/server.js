@@ -30,7 +30,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: "https://poetic-cendol-d3a4ba.netlify.app",
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }));
 
