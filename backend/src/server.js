@@ -34,7 +34,11 @@ const app = express();
 
 app.use(cors({
   origin: [
+    "http://localhost:5174",
     "http://localhost:5173",
+    "http://localhost:5175",
+    "http://localhost:5176",
+    "http://localhost:5172",
     "https://poetic-cendol-d3a4ba.netlify.app"
   ],
   credentials: true
