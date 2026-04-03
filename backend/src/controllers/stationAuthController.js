@@ -12,7 +12,7 @@ export const loginStation = async (req, res) => {
       return res.status(404).json({ message: "Station not found" });
     }
 
-    // ✅ CORRECT PASSWORD CHECK
+   
     const isMatch = await bcrypt.compare(password, station.password);
     console.log("Entered password:", password);
 console.log("Hash from DB:", station.password);
@@ -22,7 +22,7 @@ console.log("Password match:", isMatch);
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // ✅ CREATE TOKEN
+    
     const token = jwt.sign(
       { stationId: station._id, stationCode: station.stationCode },
       process.env.JWT_SECRET,
@@ -30,9 +30,12 @@ console.log("Password match:", isMatch);
     );
 
     res.json({
-      success: true,
-      token
-    });
+  success: true,
+  token,
+  station: {
+    name: station.name
+  }
+});
 
   } catch (err) {
     console.error(err);
