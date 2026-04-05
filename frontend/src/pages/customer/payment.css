@@ -444,3 +444,56 @@ body {
     font-size: 12px;
   }
 }
+
+/* ── Payment Method Selector ── */
+.paymentMethodSelector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.paymentMethodOption {
+  flex: 1;
+  position: relative;
+  cursor: pointer;
+}
+
+.paymentMethodOption input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.paymentMethodCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid rgba(22, 163, 74, 0.2);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.paymentMethodOption input:checked ~ .paymentMethodCard {
+  border-color: var(--accent);
+  background: var(--success-bg);
+  color: var(--accent-mid);
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.1);
+}
+
+.paymentMethodCard svg {
+  width: 18px;
+  height: 18px;
+  opacity: 0.7;
+}
+
+.paymentMethodOption input:checked ~ .paymentMethodCard svg {
+  opacity: 1;
+}
