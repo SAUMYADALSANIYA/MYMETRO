@@ -38,8 +38,8 @@ app.use(cors({
     "http://localhost:5173",
     "http://localhost:5175",
     "http://localhost:5176",
-    "http://localhost:5172",
-    "https://poetic-cendol-d3a4ba.netlify.app"
+    "http://localhost:5172"
+    
   ],
   credentials: true
 }));
@@ -57,7 +57,7 @@ app.use(passport.session());
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "https://mymetro.onrender.com/auth/google/callback",
+  callbackURL: "http://localhost:5001/auth/google/callback",
   passReqToCallback: true
 },
 async (req, accessToken, refreshToken, profile, done) => {
@@ -123,7 +123,7 @@ app.get("/auth/google/callback",
       { expiresIn: "1d" }
     );
 
-    res.redirect(`https://poetic-cendol-d3a4ba.netlify.app/oauth-success?token=${token}`);
+    res.redirect(`http://localhost:5173/oauth-success?token=${token}`);
   }
 );
 app.get("/", (req, res) => {
