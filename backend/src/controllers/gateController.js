@@ -1,6 +1,7 @@
 import Ticket from "../models/ticket.js";
 import Route from "../models/route.js";
 import Fare from "../models/fare.js";
+import Station from "../models/station.js";
 
 function computeFareByStops(stops, fareDoc) {
   if (stops <= 3) return fareDoc.p;
@@ -46,21 +47,76 @@ export const scanTicket = async (req, res) => {
       });
     }
 
-    // 🟢 ENTRY SCAN
-    if (!ticket.first_scan_at) {
-      ticket.first_scan_at = station;
+    // 🔥 GET STATIONS
+    const currentStation = await Station.findOne({ name: station });
+    const sourceStation = await Station.findOne({ name: ticket.source });
+    const destStation = await Station.findOne({ name: ticket.destination });
 
-      await ticket.save();
-
-      return res.json({
-        success: true,
-        type: "ENTRY",
-        message: `Entry allowed at ${station}`
+    if (!currentStation || !sourceStation || !destStation) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid station data"
       });
     }
 
-    // 🔵 EXIT SCAN
+    // 🟢 ENTRY
+   if (!ticket.first_scan_at) {
+
+  // ❌ wrong station → reject immediately
+  if (station !== ticket.source) {
+    return res.json({
+      success: false,
+      message: `Entry allowed only at ${ticket.source}`
+    });
+  }
+
+  // 🔥 atomic update (prevents duplicate entry)
+  const updatedTicket = await Ticket.findOneAndUpdate(
+    { qrToken, first_scan_at: null },
+    { first_scan_at: station },
+    { new: true }
+  );
+
+  if (!updatedTicket) {
+    return res.json({
+      success: false,
+      message: "Ticket already entered"
+    });
+  }
+
+  return res.json({
+    success: true,
+    type: "ENTRY",
+    message: `Entry allowed at ${station}`
+  });
+}
+
+    // 🔵 EXIT
     if (!ticket.second_scan_at) {
+
+      // 🔥 CHECK SAME LINE
+      if (currentStation.line !== sourceStation.line) {
+        return res.json({
+          success: false,
+          message: "Invalid line for this ticket"
+        });
+      }
+
+      // 🔥 CHECK BETWEEN RANGE
+      const minOrder = Math.min(sourceStation.order, destStation.order);
+      const maxOrder = Math.max(sourceStation.order, destStation.order);
+
+      if (
+        currentStation.order < minOrder ||
+        currentStation.order > maxOrder
+      ) {
+        return res.json({
+          success: false,
+          message: "Exit not allowed at this station"
+        });
+      }
+
+      // ✅ VALID EXIT
       ticket.second_scan_at = station;
       ticket.status = "USED";
       ticket.usedAt = new Date();
