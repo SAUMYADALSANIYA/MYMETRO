@@ -33,14 +33,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: [
-    "http://localhost:5174",
-    "http://localhost:5173",
-    "http://localhost:5175",
-    "http://localhost:5176",
-    "http://localhost:5172"
-    
-  ],
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }));
 
@@ -57,7 +50,7 @@ app.use(passport.session());
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:5001/auth/google/callback",
+  callbackURL: `${process.env.BACKEND_URL}/auth/google/callback`,
   passReqToCallback: true
 },
 async (req, accessToken, refreshToken, profile, done) => {
@@ -123,7 +116,8 @@ app.get("/auth/google/callback",
       { expiresIn: "1d" }
     );
 
-    res.redirect(`http://localhost:5173/oauth-success?token=${token}`);
+    res.redirect(`${process.env.FRONTEND_URL}/oauth-success?token=${token}`);
+
   }
 );
 app.get("/", (req, res) => {
@@ -144,10 +138,12 @@ const createDefaultAdmin = async () => {
       });
 
       console.log("Default admin created");
-    } else {
+    }
+    else {
       console.log("Admin already exists");
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error("Admin creation error:", error);
   }
 };
