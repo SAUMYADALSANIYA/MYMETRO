@@ -26,7 +26,7 @@ const ManageAdmin = () => {
       );
 
       setMessage(
-        `✅ Created: ${res.data.admin.username} | ${res.data.admin.email}`
+        `✅ Created:  ${res.data.admin.email}`
       );
 
       fetchAdmins(); // refresh list

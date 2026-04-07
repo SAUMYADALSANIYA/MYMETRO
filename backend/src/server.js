@@ -56,20 +56,15 @@ passport.use(new GoogleStrategy({
 async (req, accessToken, refreshToken, profile, done) => {
   try {
     const email = profile.emails[0].value;
-
-    // 🔥 check by googleId
     let user = await User.findOne({ googleId: profile.id });
 
     if (!user) {
-      // 🔥 check by email
       user = await User.findOne({ email });
-
       if (user) {
-        // link Google account
         user.googleId = profile.id;
         await user.save();
-      } else {
-        // create new user
+      }
+      else {
         user = await User.create({
           email,
           googleId: profile.id,
@@ -77,10 +72,9 @@ async (req, accessToken, refreshToken, profile, done) => {
         });
       }
     }
-
     return done(null, user);
-
-  } catch (error) {
+  }
+  catch (error) {
     return done(error, null);
   }
 }));
