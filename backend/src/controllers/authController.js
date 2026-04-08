@@ -32,11 +32,12 @@ export const login = async (req, res) => {
     const isMatch = await user.comparePassword(password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
+    const previousLogin = user.lastLogin;
     user.lastLogin = new Date();
     await user.save();
 
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
-    res.json({ token, user: { id: user._id, email: user.email, role: user.role } });
+    res.json({ token, user: { id: user._id, email: user.email, role: user.role, lastLogin: previousLogin } });
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
   }
